@@ -1,5 +1,5 @@
 {
-    "name": "yourresult/JiraReport",
+    "name": "yourresult/jira_report",
     "type": "library",
     "description": "Report from JIRA microservice by YourResult",
     "license": "MIT",
