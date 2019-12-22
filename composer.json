@@ -1,0 +1,10 @@
+{
+    "name": "yourresult/jira_report",
+    "type": "library",
+    "description": "Report from JIRA microservice by YourResult",
+    "license": "MIT",
+    "require": {
+        "lesstif/php-jira-rest-client": "^1.42",
+        "yourresult/microservices": "^1.0"
+    }
+}
