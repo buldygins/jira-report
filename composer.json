@@ -1,10 +1,15 @@
 {
-    "name": "yourresult/jira_report",
+    "name": "yourresult/JiraReport",
     "type": "library",
     "description": "Report from JIRA microservice by YourResult",
     "license": "MIT",
     "require": {
         "lesstif/php-jira-rest-client": "^1.42",
         "yourresult/microservices": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "YourResult\\JiraReport\\": "src/"
+        }
     }
 }
