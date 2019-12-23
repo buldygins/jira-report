@@ -13,7 +13,11 @@ class JiraReport extends \YourResult\MicroService
     function run()
     {
 
-        $jql = "worklogDate >  '2019-12-01' AND worklogDate <= '2019-12-30'";
+        $jql = $_ENV['JIRA_FILTER'];
+//        if ($jql != '') {
+//            $jql = $jql . ' and ';
+//        }
+        // $jql = $jql . "worklogDate >  '2019-12-01' AND worklogDate <= '2019-12-30'";
         $issueService = new IssueService();
 
         $startAt = 0;    //the index of the first issue to return (0-based)

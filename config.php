@@ -1,7 +1,15 @@
 <?php
-if (file_exists('.env')) {
+if (!empty($_REQUEST['project'])) {
+    $project=$_REQUEST['project'];
+    $dotenv = \Dotenv\Dotenv::create(__DIR__, ".env.".$project);
+    $dotenv->overload();
+}
+else if (file_exists('.env')) {
     $dotenv = \Dotenv\Dotenv::create(__DIR__);
     $dotenv->load();
+
+
+
 
     $dsn = 'mysql:host=localhost;dbname=' . $_ENV['DB_NAME'];
     $options = array(
