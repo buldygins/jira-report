@@ -14,6 +14,7 @@ class JiraReport extends \YourResult\MicroService
     {
 
         $jql = $_ENV['JIRA_FILTER'];
+        //$jql= "key = MASTER-19";
 //        if ($jql != '') {
 //            $jql = $jql . ' and ';
 //        }
@@ -35,6 +36,7 @@ class JiraReport extends \YourResult\MicroService
 //exit;
 
 //
+        $j=0;
         foreach ($keys as $key) {
 
             $queryParam = [
@@ -62,20 +64,57 @@ class JiraReport extends \YourResult\MicroService
 // status statuscategory colorName
 
 //print_r($ret2);
-// exit;
+//exit;
             }
 
+            unset($log);
+            if (count($issue->fields->worklog->worklogs) == 0) {
 
-            if (count($issue->fields->worklog->worklogs) > 0) {
-                foreach ($issue->fields->worklog->worklogs as $worklog) {
+                //echo "111"; exit;
+                // foreach ($issue->fields as $issue_fields)
+                {
                     $j++;
-                    unset($log);
 
                     $log['summary'] = $issue->fields->summary;
                     $log['description'] = $issue->fields->description;
                     $log['status'] = $issue->fields->status->name;
                     $log['status_color'] = $issue->fields->status->statuscategory->colorName;
                     $log['priority'] = $issue->fields->priority->name;
+                    $log['priority_id'] = $issue->fields->priority->id;
+                    $log['priority_icon'] = $issue->fields->priority->iconUrl;
+
+
+
+
+//$log['time']=.$log['minutes'].'мин. ';
+                    $log['key'] = $key;
+
+                    $d = $log['priority_id'] . 'xxx_' . $key . '_' . $j;
+
+                    $logs01[$d][$key][$log['day']] = $log;
+//-----
+                    $arkeys[$key]['summary'] = $log['summary'];
+                    $arkeys[$key]['seconds_all'] = 0;
+//$arkeys['ITOG']['seconds_all'] = $arkeys['ITOG']['seconds_all'] + $timetracking->timeSpentSeconds;
+
+                    $arkeys[$key]['hours'] = 0;
+                    $arkeys[$key]['minutes'] = 0;
+
+                    $arkeys[$key]['time'] = '';
+                }
+            }
+            else
+             {
+                 //echo "222"; exit;
+                foreach ($issue->fields->worklog->worklogs as $worklog) {
+                    $j++;
+
+                    $log['summary'] = $issue->fields->summary;
+                    $log['description'] = $issue->fields->description;
+                    $log['status'] = $issue->fields->status->name;
+                    $log['status_color'] = $issue->fields->status->statuscategory->colorName;
+                    $log['priority'] = $issue->fields->priority->name;
+                    $log['priority_id'] = $issue->fields->priority->id;
                     $log['priority_icon'] = $issue->fields->priority->iconUrl;
 
 
@@ -100,9 +139,9 @@ class JiraReport extends \YourResult\MicroService
 //$log['time']=.$log['minutes'].'мин. ';
                     $log['key'] = $key;
 
-                    $d = $log['day'] . '_' . $key . '_' . $j;
+                    $d = $log['priority_id'].$log['day']. '_' . $key . '_' . $j;
 
-                    $logs[$d][$key][$log['day']] = $log;
+                    $logs02[$d][$key][$log['day']] = $log;
 //-----
                     $arkeys[$key]['summary'] = $log['summary'];
                     $arkeys[$key]['seconds_all'] = $timetracking->timeSpentSeconds;
@@ -121,43 +160,21 @@ class JiraReport extends \YourResult\MicroService
                 }
             }
 
-            else {
-                foreach ($issue->fields as $issue_fields) {
-                    $j++;
-                    unset($log);
 
-                    $log['summary'] = $issue->fields->summary;
-                    $log['description'] = $issue->fields->description;
-                    $log['status'] = $issue->fields->status->name;
-                    $log['status_color'] = $issue->fields->status->statuscategory->colorName;
-                    $log['priority'] = $issue->fields->priority->name;
-                    $log['priority_icon'] = $issue->fields->priority->iconUrl;
-
-
-
-
-//$log['time']=.$log['minutes'].'мин. ';
-                    $log['key'] = $key;
-
-                    $d = 'XXX' . '_' . $key . '_' . $j;
-
-                    $logs[$d][$key][$log['day']] = $log;
-//-----
-                    $arkeys[$key]['summary'] = $log['summary'];
-                    $arkeys[$key]['seconds_all'] = 0;
-//$arkeys['ITOG']['seconds_all'] = $arkeys['ITOG']['seconds_all'] + $timetracking->timeSpentSeconds;
-
-                    $arkeys[$key]['hours'] = 0;
-                    $arkeys[$key]['minutes'] = 0;
-
-                    $arkeys[$key]['time'] = '';
-                }
-            }
 
         }
 
 
-        ksort($logs);
+
+//        print_r($logs01);
+//        echo "-------------------";
+//        print_r($logs02);
+//
+//        exit;
+        ksort($logs01);
+        ksort($logs02);
+
+        $logs=array_merge($logs01, $logs02);
 
         $items = [];
         foreach ($logs as $log) {
@@ -239,7 +256,8 @@ class JiraReport extends \YourResult\MicroService
             echo "<td style='border-bottom: 1px solid gray'>{$arkeys[$kitem]['summary']}</td>";
 
 
-            for ($i = 1; $i <= 31; $i++) {
+            for ($i = 1; $i <= 31; $i++)
+            {
                 $bgcolor = 'white';
                 $w = date('N', strtotime('2019-12-' . $i));
                 if ($w >= 6) {
@@ -249,14 +267,19 @@ class JiraReport extends \YourResult\MicroService
                 if ($ii == count($items)) {
                     $bgcolor = $bglastline;
                 }
-                echo "<td style='padding:2px; border: 1px solid gray; background-color: $bgcolor;'>";
 
+
+
+                $cell='';
                 foreach ($ditem as $day => $item) {
-                    if ($item['day'] == $i) {
+                    if ($item['day'] == $i)
+                    {
                         if ($_ENV['REPORT_SHOW_TIME'] == 'hide') {
-                            echo '+';
+                            $cell=' ';
+                            $bgcolor='#b0de98';
                         } else {
-                            echo $item['time'];
+                            $cell=$item['time'];
+                            $bgcolor='#b0de98';
                         }
                     }
 
@@ -272,19 +295,31 @@ class JiraReport extends \YourResult\MicroService
                     //            }
                 }
 
+                echo "<td style='padding:2px; text-align: center; border: 1px solid gray; background-color: $bgcolor;'>";
+                echo "<nobr>$cell</nobr>";
                 echo '</td>';
             }
 
-            if ($_ENV['REPORT_SHOW_TRUD'] != 'hide') {
-                echo "<td style='border-bottom: 1px solid gray;
-border-left: 1px solid gray; 
-text-align: center;'>";
-                if ($_ENV['REPORT_SHOW_TIME'] != 'hide') {
+            if ($_ENV['REPORT_SHOW_TRUD'] != 'hide')
+            {
+                if ($_ENV['REPORT_SHOW_TIME'] != 'hide')
+                {
+                    echo "<td style='border-bottom: 1px solid gray;border-left: 1px solid gray;text-align: center;'>";
                     echo $arkeys[$kitem]['time'];
-                } elseif ((0 + $arkeys[$kitem]['time']) > 0) {
-                    echo '+';
+                    echo "</td>";
+
                 }
-                echo "</td>";
+                elseif ((0 + $arkeys[$kitem]['time']) > 0)
+                {
+                    echo "<td style='border-bottom: 1px solid gray;border-left: 1px solid gray;text-align: center;'>";
+                    echo "</td>";
+
+                }
+                else{
+                    echo "<td style='border-bottom: 1px solid gray;border-left: 1px solid gray;text-align: center;'>";
+                    echo "</td>";
+                }
+
             }
 
             if ($_ENV['REPORT_SHOW_STATUS'] == 'show') {
