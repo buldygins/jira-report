@@ -52,60 +52,107 @@ class JiraReport extends \YourResult\MicroService
 
             $issue = $issueService->get($key, $queryParam);
             $timetracking = $issueService->getTimeTracking($key);
+            //echo $timetracking; exit;
 
-
-            if ($key == 'ORG-2') {
-//print_r($issue->fields->worklog);
+            if ($key == 'MASTER-19') {
+//print_r($issue->fields);
+// description
+// priority name iconUrl
+// status name
+// status statuscategory colorName
 
 //print_r($ret2);
-//exit;
+// exit;
             }
 
-            foreach ($issue->fields->worklog->worklogs as $worklog) {
-                $j++;
-                unset($log);
-                $log['summary'] = $issue->fields->summary;
-                $log['comment'] = $worklog->comment;
+
+            if (count($issue->fields->worklog->worklogs) > 0) {
+                foreach ($issue->fields->worklog->worklogs as $worklog) {
+                    $j++;
+                    unset($log);
+
+                    $log['summary'] = $issue->fields->summary;
+                    $log['description'] = $issue->fields->description;
+                    $log['status'] = $issue->fields->status->name;
+                    $log['status_color'] = $issue->fields->status->statuscategory->colorName;
+                    $log['priority'] = $issue->fields->priority->name;
+                    $log['priority_icon'] = $issue->fields->priority->iconUrl;
+
+
+                    $log['comment'] = $worklog->comment;
 //$log['created']=$worklog->created;
-                $log['started'] = $worklog->started;
-                $log['day'] = date('d', strtotime($worklog->started));
-                $log['rand'] = $j;
-                $log['seconds_all'] = $worklog->timeSpentSeconds;
-                $log['hours'] = intdiv($worklog->timeSpentSeconds, 3600);
-                $log['minutes'] = ($worklog->timeSpentSeconds - $log['hours'] * 3600) / 60;
+                    $log['started'] = $worklog->started;
+                    $log['day'] = date('d', strtotime($worklog->started));
+                    $log['rand'] = $j;
+                    $log['seconds_all'] = $worklog->timeSpentSeconds;
+                    $log['hours'] = intdiv($worklog->timeSpentSeconds, 3600);
+                    $log['minutes'] = ($worklog->timeSpentSeconds - $log['hours'] * 3600) / 60;
 
 
-                $log['time'] = '';
-                if ($log['hours'] > 0) {
-                    $log['time'] .= $log['hours'] . 'ч ';
-                }
-                if ($log['minutes'] > 0) {
-                    $log['time'] .= $log['minutes'] . 'м. ';
-                }
+                    $log['time'] = '';
+                    if ($log['hours'] > 0) {
+                        $log['time'] .= $log['hours'] . 'ч ';
+                    }
+                    if ($log['minutes'] > 0) {
+                        $log['time'] .= $log['minutes'] . 'м. ';
+                    }
+
 //$log['time']=.$log['minutes'].'мин. ';
-                $log['key'] = $key;
+                    $log['key'] = $key;
 
-                $d = $log['day'] . '_' . $key . '_' . $j;
+                    $d = $log['day'] . '_' . $key . '_' . $j;
 
-                $logs[$d][$key][$log['day']] = $log;
+                    $logs[$d][$key][$log['day']] = $log;
 //-----
-                $arkeys[$key]['summary'] = $log['summary'];
-                $arkeys[$key]['seconds_all'] = $timetracking->timeSpentSeconds;
+                    $arkeys[$key]['summary'] = $log['summary'];
+                    $arkeys[$key]['seconds_all'] = $timetracking->timeSpentSeconds;
 //$arkeys['ITOG']['seconds_all'] = $arkeys['ITOG']['seconds_all'] + $timetracking->timeSpentSeconds;
 
-                $arkeys[$key]['hours'] = intdiv($timetracking->timeSpentSeconds, 3600);
-                $arkeys[$key]['minutes'] = ($timetracking->timeSpentSeconds - $arkeys[$key]['hours'] * 3600) / 60;
+                    $arkeys[$key]['hours'] = intdiv($timetracking->timeSpentSeconds, 3600);
+                    $arkeys[$key]['minutes'] = ($timetracking->timeSpentSeconds - $arkeys[$key]['hours'] * 3600) / 60;
 
-                $arkeys[$key]['time'] = '';
-                if ($arkeys[$key]['hours'] > 0) {
-                    $arkeys[$key]['time'] .= $arkeys[$key]['hours'] . 'ч ';
+                    $arkeys[$key]['time'] = '';
+                    if ($arkeys[$key]['hours'] > 0) {
+                        $arkeys[$key]['time'] .= $arkeys[$key]['hours'] . 'ч ';
+                    }
+                    if ($arkeys[$key]['minutes'] > 0) {
+                        $arkeys[$key]['time'] .= $arkeys[$key]['minutes'] . 'м. ';
+                    }
                 }
-                if ($arkeys[$key]['minutes'] > 0) {
-                    $arkeys[$key]['time'] .= $arkeys[$key]['minutes'] . 'м. ';
-                }
-
             }
 
+            else {
+                foreach ($issue->fields as $issue_fields) {
+                    $j++;
+                    unset($log);
+
+                    $log['summary'] = $issue->fields->summary;
+                    $log['description'] = $issue->fields->description;
+                    $log['status'] = $issue->fields->status->name;
+                    $log['status_color'] = $issue->fields->status->statuscategory->colorName;
+                    $log['priority'] = $issue->fields->priority->name;
+                    $log['priority_icon'] = $issue->fields->priority->iconUrl;
+
+
+
+
+//$log['time']=.$log['minutes'].'мин. ';
+                    $log['key'] = $key;
+
+                    $d = 'XXX' . '_' . $key . '_' . $j;
+
+                    $logs[$d][$key][$log['day']] = $log;
+//-----
+                    $arkeys[$key]['summary'] = $log['summary'];
+                    $arkeys[$key]['seconds_all'] = 0;
+//$arkeys['ITOG']['seconds_all'] = $arkeys['ITOG']['seconds_all'] + $timetracking->timeSpentSeconds;
+
+                    $arkeys[$key]['hours'] = 0;
+                    $arkeys[$key]['minutes'] = 0;
+
+                    $arkeys[$key]['time'] = '';
+                }
+            }
 
         }
 
@@ -170,7 +217,13 @@ class JiraReport extends \YourResult\MicroService
         for ($i = 1; $i <= 31; $i++) {
             echo "<td style='min-width: 20px;text-align: center'>$i</td>";
         }
-        echo '<td>Трудоемкость</td>';
+        if ($_ENV['REPORT_SHOW_TRUD'] != 'hide') {
+            echo '<td>Трудоемкость</td>';
+        }
+        if ($_ENV['REPORT_SHOW_STATUS'] == 'show') {
+            echo '<td>Приоритет</td>';
+            echo '<td>Статус</td>';
+        }
         echo '</tr>';
 
         $ii = 0;
@@ -182,7 +235,7 @@ class JiraReport extends \YourResult\MicroService
             } else {
                 echo '<tr>';
             }
-            echo "<td style='border-bottom: 1px solid gray'>$kitem</td>";
+            echo "<td style='border-bottom: 1px solid gray'><nobr>$kitem</nobr></td>";
             echo "<td style='border-bottom: 1px solid gray'>{$arkeys[$kitem]['summary']}</td>";
 
 
@@ -200,7 +253,11 @@ class JiraReport extends \YourResult\MicroService
 
                 foreach ($ditem as $day => $item) {
                     if ($item['day'] == $i) {
-                        echo $item['time'];
+                        if ($_ENV['REPORT_SHOW_TIME'] == 'hide') {
+                            echo '+';
+                        } else {
+                            echo $item['time'];
+                        }
                     }
 
 
@@ -218,9 +275,29 @@ class JiraReport extends \YourResult\MicroService
                 echo '</td>';
             }
 
-            echo "<td style='border-bottom: 1px solid gray;
+            if ($_ENV['REPORT_SHOW_TRUD'] != 'hide') {
+                echo "<td style='border-bottom: 1px solid gray;
 border-left: 1px solid gray; 
-text-align: center;'>{$arkeys[$kitem]['time']}</td>";
+text-align: center;'>";
+                if ($_ENV['REPORT_SHOW_TIME'] != 'hide') {
+                    echo $arkeys[$kitem]['time'];
+                } elseif ((0 + $arkeys[$kitem]['time']) > 0) {
+                    echo '+';
+                }
+                echo "</td>";
+            }
+
+            if ($_ENV['REPORT_SHOW_STATUS'] == 'show') {
+                echo '<td style="text-align:center; border: 1px solid gray;">';
+                if ($item['priority_icon']!='') {
+                    echo "<img src='{$item['priority_icon']}' title='{$item['priority']}' height='30px' width='30px' />";
+                }
+                echo '</td>';
+
+                echo '<td style="padding: 5px; text-align:center; border: 1px solid gray; background-color: '.$item['status_color'].'">';
+                echo "<nobr>{$item['status']}</nobr>";
+                echo '</td>';
+            }
 
             echo '</tr>';
         }
@@ -229,9 +306,11 @@ text-align: center;'>{$arkeys[$kitem]['time']}</td>";
         echo "</table>";
 
 //print_r($arkeys['ITOG']);
-        $hours = $arkeys['ITOG']['hours'] + $arkeys['ITOG']['minutes'] / 60;
-        $summ = $hours * $_ENV['COST_HOUR'];
-        echo "Часовая ставка: $stavka руб. Стоимость: <b>" . $summ . '</b> руб.';
+        if ($_ENV['REPORT_SHOW_COST'] != 'hide') {
+            $hours = $arkeys['ITOG']['hours'] + $arkeys['ITOG']['minutes'] / 60;
+            $summ = $hours * $_ENV['COST_HOUR'];
+            echo "Часовая ставка: $stavka руб. Стоимость: <b>" . $summ . '</b> руб.';
+        }
     }
 
 
