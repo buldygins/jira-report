@@ -374,10 +374,18 @@ class JiraReport extends \YourResult\MicroService
 
 //print_r($arkeys['ITOG']);
         if ($_ENV['REPORT_SHOW_COST'] != 'hide') {
-            $stavka=$_ENV['COST_HOUR'];
-            $hours = $arkeys['ITOG']['hours'] + $arkeys['ITOG']['minutes'] / 60;
-            $summ = $hours * $stavka;
-            echo "Часовая ставка: $stavka руб. Стоимость: <b>" . $summ . '</b> руб.';
+            if (isset($_ENV['COST_MONTH']) && ($_ENV['COST_MONTH']>0))
+            {
+                $stavka = $_ENV['COST_MONTH'];
+                echo "Оплата в месяц: $stavka руб.";
+            }
+            elseif (isset($_ENV['COST_HOUR']) && ($_ENV['COST_HOUR']>0))
+            {
+                $stavka = $_ENV['COST_HOUR'];
+                $hours = $arkeys['ITOG']['hours'] + $arkeys['ITOG']['minutes'] / 60;
+                $summ = $hours * $stavka;
+                echo "Часовая ставка: $stavka руб. Стоимость: <b>" . $summ . '</b> руб.';
+            }
         }
     }
 
