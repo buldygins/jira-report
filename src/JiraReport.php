@@ -2,12 +2,11 @@
 
 namespace YourResult;
 
+use PDO;
+use JiraRestApi\Issue\IssueField;
 use JiraRestApi\Issue\IssueService;
 use JiraRestApi\JiraException;
 use JiraRestApi\User\UserService;
-use JiraRestApi\Issue\IssueField;
-use JiraRestApi\Issue\TimeTracking;
-use ReallySimpleJWT\Token;
 
 class JiraReport extends \YourResult\MicroService
 {
@@ -15,13 +14,16 @@ class JiraReport extends \YourResult\MicroService
     {
         parent::route();
 
-        switch ($this->url_parts['params'][1]) {
+        switch ($this->url_parts['params'][1])
+        {
             case 'addTask':
                 $this->addTask();
                 break;
+            case 'projects':
+                $this->projects();
+                break;
         }
     }
-
 
     function addTask()
     {
@@ -68,14 +70,26 @@ class JiraReport extends \YourResult\MicroService
                 $ret = $issueService->create($issueField);
 
                 //If success, Returns a link to the created issue.
-               // var_dump($ret);
+                // var_dump($ret);
                 echo "<SCRIPT>document.location='/run?project={$_REQUEST['project']}';</SCRIPT>";
-            }
-            catch (JiraException $e)
+            } catch (JiraException $e)
             {
                 print("Error Occured! " . $e->getMessage());
             }
         }
+    }
+
+    function projects()
+    {
+        $sql = "SELECT * FROM projects";
+        $rows = $this->db->query($sql, PDO::FETCH_ASSOC)->fetchAll();
+        foreach($rows as $row)
+        {
+            echo "<div style='background-color: silver;padding: 5px; width: 400px;'>";
+            echo "<a href='/run?project={$row['nam']}'>{$row['descr']}</a>";
+            echo "</div><br>";
+        }
+
     }
 
     function run()

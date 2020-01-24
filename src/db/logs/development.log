@@ -150,3 +150,15 @@ Jan 24 22:10:10 [info] CREATE TABLE `events_subscribe` (
  PRIMARY KEY (`id`)) Engine=InnoDB;
 Jan 24 22:10:10 [info] CREATE UNIQUE INDEX `idx_events_subscribe_service_in_and_service_out_and_event_nam` ON `events_subscribe`(`service_in`, `service_out`, `event_nam`)
 Jan 24 22:10:10 [info] INSERT INTO migrations (version) VALUES ('20200106052704')
+Jan 24 23:59:38 [info] SELECT version FROM migrations
+Jan 24 23:59:38 [info] SELECT version FROM migrations
+Jan 24 23:59:38 [info] SELECT version FROM migrations
+Jan 24 23:59:38 [info] CREATE TABLE `projects` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(50),
+`url` varchar(255),
+`descr` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jan 24 23:59:39 [info] CREATE UNIQUE INDEX `idx_projects_nam` ON `projects`(`nam`)
+Jan 24 23:59:39 [info] INSERT INTO migrations (version) VALUES ('20200124231148')
