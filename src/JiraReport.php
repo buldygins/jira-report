@@ -5,16 +5,77 @@ namespace YourResult;
 use JiraRestApi\Issue\IssueService;
 use JiraRestApi\JiraException;
 use JiraRestApi\User\UserService;
+use JiraRestApi\Issue\IssueField;
+use JiraRestApi\Issue\TimeTracking;
+use ReallySimpleJWT\Token;
 
 class JiraReport extends \YourResult\MicroService
 {
+    function route()
+    {
+        parent::route();
+
+        switch ($this->url_parts['params'][1]) {
+            case 'addTask':
+                $this->addTask();
+                break;
+        }
+    }
+
 
     function addTask()
     {
-        ?>
 
+        if (!isset($_REQUEST['create']))
+        {
+            ?>
+            <form method="post">
+                <table>
+                    <tr>
+                        <td>Тема</td>
+                        <td><input type="text" name="subject"></td>
+                    </tr>
+                    <tr>
+                        <td>Описание</td>
+                        <td><textarea rows="10" cols="40" name="text"></textarea></td>
+                    </tr>
+                </table>
+                <input type="hidden" name="project" value="<?= $_REQUEST['project']; ?>">
+                <input type="hidden" name="create" value="1">
+                <input type="submit">
+            </form>
+            <?
+        }
+        else
+        {
+            //print_r($_REQUEST);
+            try
+            {
+                $issueField = new IssueField();
 
-        <?
+                $issueField->setProjectKey("BG")->setSummary($_REQUEST['subject'])->setAssigneeName("v.smorodinsky")
+                    //->setPriorityName("Critical")
+                    ->setIssueType("Задача")->setDescription($_REQUEST['text'])
+                    //->addVersion(["1.0.1", "1.0.3"])
+                    //->addComponents(['Component-1', 'Component-2'])
+                    // set issue security if you need.
+                    // ->setSecurityId(10001 /* security scheme id */)
+                    //->setDueDate('2020-01-19')
+                ;
+
+                $issueService = new IssueService();
+
+                $ret = $issueService->create($issueField);
+
+                //If success, Returns a link to the created issue.
+               // var_dump($ret);
+                echo "<SCRIPT>document.location='/run?project={$_REQUEST['project']}';</SCRIPT>";
+            }
+            catch (JiraException $e)
+            {
+                print("Error Occured! " . $e->getMessage());
+            }
+        }
     }
 
     function run()
@@ -306,7 +367,7 @@ class JiraReport extends \YourResult\MicroService
 //print_r($items);exit;
 
 
-        echo "<a href='addTask?project={$_REQUEST['project']}'><button>Создать задачу</button></a><br><br>";
+        echo "<a href='/addTask?project={$_REQUEST['project']}'><button>Создать задачу</button></a><br><br>";
 
         echo "<table style='border: 1px solid gray;'>";
         echo "<tr bgcolor='silver'><td colspan='2'>Задача</td>";
