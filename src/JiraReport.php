@@ -13,16 +13,35 @@ class JiraReport extends \YourResult\MicroService
     function run()
     {
 
+
         $jql = $_ENV['JIRA_FILTER'];
         //$jql= "key = MASTER-19";
 //        if ($jql != '') {
 //            $jql = $jql . ' and ';
 //        }
 
+        $currentDate = new \DateTime();
+        $currentDate->modify( 'first day of next month' );
+        //echo $d->format( 'Y-m-d' ), "\n";
+        //$dateTo=$currentDate->format('Y-m-d');
+
+
+        $report_month=date('m');
+        $dateFrom=date('Y-m-01'); //, '');//'2020-01-01';
+        //$dateFrom='2020-01-01';
+        //$dateTo=$currentDate->format('Y-m-d'); //'2020-01-31';
+        //$dateTo='2020-01-31';
+
+        $dateTo=date('Y-m-d', strtotime('last day of this month'));
+        $date_part=date('Y-m-');
+
+        //echo $dateTo;
+        //exit;
+
         if ($_ENV['REPORT_SHOW_LOGGED_ONLY'] != false) {
-            $jql = $jql . " AND (worklogDate >  '2019-12-01') AND (worklogDate <= '2019-12-31')";
+            $jql = $jql . " AND (worklogDate >  '$dateFrom') AND (worklogDate <= '$dateTo')";
         } else {
-            $jql = $jql . " AND (updated >  '2019-12-01') AND (updated <= '2019-12-31')";
+            $jql = $jql . " AND (updated >  '$dateFrom') AND (updated <= '$dateTo')";
         }
         //echo $jql;exit;
         $issueService = new IssueService();
@@ -92,9 +111,9 @@ class JiraReport extends \YourResult\MicroService
 //$log['time']=.$log['minutes'].'мин. ';
                     $log['key'] = $key;
 
-                    $d = $log['priority_id'] . 'xxx_' . $key . '_' . $j;
+                    $currentDate = $log['priority_id'] . 'xxx_' . $key . '_' . $j;
 
-                    $logs01[$d][$key][$log['day']] = $log;
+                    $logs01[$currentDate][$key][$log['day']] = $log;
 //-----
                     $arkeys[$key]['summary'] = $log['summary'];
                     $arkeys[$key]['seconds_all'] = 0;
@@ -130,6 +149,7 @@ class JiraReport extends \YourResult\MicroService
 //$log['created']=$worklog->created;
                         $log['started'] = $worklog->started;
                         $log['day'] = date('d', strtotime($worklog->started));
+                        $log['month'] = date('m', strtotime($worklog->started));
                         $log['rand'] = $j;
                         $log['seconds_all'] = $worklog->timeSpentSeconds;
                         $log['hours'] = intdiv($worklog->timeSpentSeconds, 3600);
@@ -147,9 +167,11 @@ class JiraReport extends \YourResult\MicroService
 //$log['time']=.$log['minutes'].'мин. ';
                         $log['key'] = $key;
 
-                        $d = $log['priority_id'] . $log['day'] . '_' . $key . '_' . $j;
+                        $currentDate = $log['priority_id'] . $log['day'] . '_' . $key . '_' . $j;
 
-                        $logs02[$d][$key][$log['day']] = $log;
+                        if ($log['month']==$report_month)
+                        {
+                        $logs02[$currentDate][$key][$log['day']] = $log;
 //-----
                         $arkeys[$key]['summary'] = $log['summary'];
                         $arkeys[$key]['seconds_all'] = $timetracking->timeSpentSeconds;
@@ -165,6 +187,8 @@ class JiraReport extends \YourResult\MicroService
                         if ($arkeys[$key]['minutes'] > 0) {
                             $arkeys[$key]['time'] .= $arkeys[$key]['minutes'] . 'м. ';
                         }
+
+                    }
                     }
                 }
             }
@@ -265,13 +289,15 @@ class JiraReport extends \YourResult\MicroService
             } else {
                 echo '<tr>';
             }
-            echo "<td style='border-bottom: 1px solid gray'><nobr>$kitem</nobr></td>";
+            echo "<td style='border-bottom: 1px solid gray'>
+                    <nobr><a target='_blank' href='{$_ENV['JIRA_HOST']}/browse/$kitem'>$kitem</a></nobr>
+                  </td>";
             echo "<td style='border-bottom: 1px solid gray'>{$arkeys[$kitem]['summary']}</td>";
 
 
             for ($i = 1; $i <= 31; $i++) {
                 $bgcolor = 'white';
-                $w = date('N', strtotime('2019-12-' . $i));
+                $w = date('N', strtotime($date_part . $i));
                 if ($w >= 6) {
                     $bgcolor = '#DCDCDC';
                 }
@@ -347,8 +373,9 @@ class JiraReport extends \YourResult\MicroService
 
 //print_r($arkeys['ITOG']);
         if ($_ENV['REPORT_SHOW_COST'] != 'hide') {
+            $stavka=$_ENV['COST_HOUR'];
             $hours = $arkeys['ITOG']['hours'] + $arkeys['ITOG']['minutes'] / 60;
-            $summ = $hours * $_ENV['COST_HOUR'];
+            $summ = $hours * $stavka;
             echo "Часовая ставка: $stavka руб. Стоимость: <b>" . $summ . '</b> руб.';
         }
     }
