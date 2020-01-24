@@ -1,6 +1,6 @@
 <?php
 
-namespace YourResult\JiraReport;
+namespace YourResult;
 
 use JiraRestApi\JiraException;
 use JiraRestApi\Issue\IssueService;
@@ -12,8 +12,6 @@ class JiraReport extends \YourResult\MicroService
 
     function run()
     {
-
-
         $jql = $_ENV['JIRA_FILTER'];
         //$jql= "key = MASTER-19";
 //        if ($jql != '') {
@@ -60,6 +58,9 @@ class JiraReport extends \YourResult\MicroService
 //print_r($keys);exit;
 
 //
+
+        $logs01=[];
+        $logs02=[];
         $j = 0;
         foreach ($keys as $key) {
 
@@ -201,7 +202,7 @@ class JiraReport extends \YourResult\MicroService
 //        echo "-------------------";
 //        print_r($logs02);
 //
-//        exit;
+        //exit;
         ksort($logs01);
         ksort($logs02);
 

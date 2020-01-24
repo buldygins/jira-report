@@ -1,0 +1,152 @@
+Jan 24 22:07:28 [info] CREATE TABLE `RUCKUSING_TS_SCHEMA_TBL_NAME` (
+`version` varchar(255))  DEFAULT CHARSET=utf8;
+Jan 24 22:07:29 [info] CREATE UNIQUE INDEX `idx_RUCKUSING_TS_SCHEMA_TBL_NAME_version` ON `RUCKUSING_TS_SCHEMA_TBL_NAME`(`version`)
+Jan 24 22:07:29 [info] SELECT version FROM RUCKUSING_TS_SCHEMA_TBL_NAME
+Jan 24 22:07:29 [info] SELECT version FROM RUCKUSING_TS_SCHEMA_TBL_NAME
+Jan 24 22:07:29 [info] SELECT version FROM RUCKUSING_TS_SCHEMA_TBL_NAME
+Jan 24 22:07:29 [info] CREATE TABLE `version` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(64),
+`descr` varchar(64),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jan 24 22:07:29 [info] INSERT INTO RUCKUSING_TS_SCHEMA_TBL_NAME (version) VALUES ('20200102221830')
+Jan 24 22:07:29 [info] CREATE TABLE `services` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(50),
+`url` varchar(255),
+`descr` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jan 24 22:07:30 [info] CREATE UNIQUE INDEX `idx_services_nam` ON `services`(`nam`)
+Jan 24 22:07:30 [info] INSERT INTO RUCKUSING_TS_SCHEMA_TBL_NAME (version) VALUES ('20200105231148')
+Jan 24 22:07:30 [info] CREATE TABLE `events` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(255),
+`service` varchar(255),
+`subject` varchar(255),
+`body` text,
+`created_at` datetime,
+`expired_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jan 24 22:07:30 [info] INSERT INTO RUCKUSING_TS_SCHEMA_TBL_NAME (version) VALUES ('20200105231209')
+Jan 24 22:07:30 [info] CREATE TABLE `listen_events` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(255),
+`service` varchar(50),
+`id_in_service` int(11),
+`subject` varchar(255),
+`body` text,
+`created_at` datetime,
+`expired_at` datetime,
+`come_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jan 24 22:07:30 [info] CREATE UNIQUE INDEX `idx_listen_events_service_and_id_in_service` ON `listen_events`(`service`, `id_in_service`)
+Jan 24 22:07:30 [info] INSERT INTO RUCKUSING_TS_SCHEMA_TBL_NAME (version) VALUES ('20200105231247')
+Jan 24 22:07:30 [info] CREATE TABLE `sent_token` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`id_token` int(11),
+`service` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jan 24 22:07:31 [info] INSERT INTO RUCKUSING_TS_SCHEMA_TBL_NAME (version) VALUES ('20200106020650')
+Jan 24 22:07:31 [info] CREATE TABLE `events_services` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`service` varchar(50),
+`event_nam` varchar(50),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jan 24 22:07:31 [info] CREATE UNIQUE INDEX `idx_events_services_service_and_event_nam` ON `events_services`(`service`, `event_nam`)
+Jan 24 22:07:31 [info] INSERT INTO RUCKUSING_TS_SCHEMA_TBL_NAME (version) VALUES ('20200106050550')
+Jan 24 22:07:31 [info] CREATE TABLE `events_subscribe` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`service_in` varchar(50),
+`service_out` varchar(50),
+`event_nam` varchar(50),
+`func` varchar(50),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jan 24 22:07:31 [info] CREATE UNIQUE INDEX `idx_events_subscribe_service_in_and_service_out_and_event_nam` ON `events_subscribe`(`service_in`, `service_out`, `event_nam`)
+Jan 24 22:07:31 [info] INSERT INTO RUCKUSING_TS_SCHEMA_TBL_NAME (version) VALUES ('20200106052704')
+Jan 24 22:09:49 [info] CREATE TABLE `migrations` (
+`version` varchar(255))  DEFAULT CHARSET=utf8;
+Jan 24 22:09:50 [info] CREATE UNIQUE INDEX `idx_migrations_version` ON `migrations`(`version`)
+Jan 24 22:09:50 [info] SELECT version FROM migrations
+Jan 24 22:09:50 [info] SELECT version FROM migrations
+Jan 24 22:09:50 [info] SELECT version FROM migrations
+Jan 24 22:09:50 [info] CREATE TABLE `version` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(64),
+`descr` varchar(64),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jan 24 22:10:08 [info] CREATE TABLE `migrations` (
+`version` varchar(255))  DEFAULT CHARSET=utf8;
+Jan 24 22:10:08 [info] CREATE UNIQUE INDEX `idx_migrations_version` ON `migrations`(`version`)
+Jan 24 22:10:09 [info] SELECT version FROM migrations
+Jan 24 22:10:09 [info] SELECT version FROM migrations
+Jan 24 22:10:09 [info] SELECT version FROM migrations
+Jan 24 22:10:09 [info] CREATE TABLE `version` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(64),
+`descr` varchar(64),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jan 24 22:10:09 [info] INSERT INTO migrations (version) VALUES ('20200102221830')
+Jan 24 22:10:09 [info] CREATE TABLE `services` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(50),
+`url` varchar(255),
+`descr` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jan 24 22:10:09 [info] CREATE UNIQUE INDEX `idx_services_nam` ON `services`(`nam`)
+Jan 24 22:10:09 [info] INSERT INTO migrations (version) VALUES ('20200105231148')
+Jan 24 22:10:09 [info] CREATE TABLE `events` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(255),
+`service` varchar(255),
+`subject` varchar(255),
+`body` text,
+`created_at` datetime,
+`expired_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jan 24 22:10:09 [info] INSERT INTO migrations (version) VALUES ('20200105231209')
+Jan 24 22:10:09 [info] CREATE TABLE `listen_events` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(255),
+`service` varchar(50),
+`id_in_service` int(11),
+`subject` varchar(255),
+`body` text,
+`created_at` datetime,
+`expired_at` datetime,
+`come_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jan 24 22:10:09 [info] CREATE UNIQUE INDEX `idx_listen_events_service_and_id_in_service` ON `listen_events`(`service`, `id_in_service`)
+Jan 24 22:10:09 [info] INSERT INTO migrations (version) VALUES ('20200105231247')
+Jan 24 22:10:09 [info] CREATE TABLE `sent_token` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`id_token` int(11),
+`service` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jan 24 22:10:09 [info] INSERT INTO migrations (version) VALUES ('20200106020650')
+Jan 24 22:10:09 [info] CREATE TABLE `events_services` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`service` varchar(50),
+`event_nam` varchar(50),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jan 24 22:10:09 [info] CREATE UNIQUE INDEX `idx_events_services_service_and_event_nam` ON `events_services`(`service`, `event_nam`)
+Jan 24 22:10:10 [info] INSERT INTO migrations (version) VALUES ('20200106050550')
+Jan 24 22:10:10 [info] CREATE TABLE `events_subscribe` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`service_in` varchar(50),
+`service_out` varchar(50),
+`event_nam` varchar(50),
+`func` varchar(50),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jan 24 22:10:10 [info] CREATE UNIQUE INDEX `idx_events_subscribe_service_in_and_service_out_and_event_nam` ON `events_subscribe`(`service_in`, `service_out`, `event_nam`)
+Jan 24 22:10:10 [info] INSERT INTO migrations (version) VALUES ('20200106052704')

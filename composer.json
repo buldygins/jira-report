@@ -9,7 +9,7 @@
     },
     "autoload": {
         "psr-4": {
-            "YourResult\\JiraReport\\": "src/"
+            "YourResult\\": "src/"
         }
     }
 }
