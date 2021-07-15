@@ -27,6 +27,9 @@ else{
     exit;
 }
 
+global $dbpdo;
+$dbpdo = $db;
+
 
 //--------------------------------------------
 // FOR Ruckus Migrations

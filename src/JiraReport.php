@@ -103,9 +103,18 @@ class JiraReport extends \YourResult\MicroService
 
     function project()
     {
+        $all_users = $this->query("SELECT displayName, accountId FROM users")->fetchAll();
+        foreach ($all_users as $user){
+            $users[$user['accountId']] = $user['displayName'];
+        }
         try {
             $proj = new ProjectService();
             $prjs = $proj->getAllProjects();
+            //fetch users
+//            foreach ($prjs as $project) {
+//                $proj->getAssignable($project->id);
+//                exit();
+//            }
         } catch (JiraRestApi\JiraException $e) {
             print("Error Occured! " . $e->getMessage());
         }
@@ -114,6 +123,9 @@ class JiraReport extends \YourResult\MicroService
     }
 
     function getDesk(){
+        $wl = new Worklog();
+        var_dump($wl->getTable());
+        exit();
 
         $jql[] = 'project = ' . $_GET['desk'];
 
@@ -129,14 +141,13 @@ class JiraReport extends \YourResult\MicroService
         $dateTo = date('Y-m-d', strtotime('last day of ' . $report_month_str));
 
         if (boolval($_ENV['REPORT_SHOW_LOGGED_ONLY']) != false) {
-            $jql[] = "worklogAuthor = currentUser() AND worklogDate >= \"$dateFrom\" AND worklogDate <= \"$dateTo\"";
+            $jql[] = "(worklogDate >= '$dateFrom') AND (worklogDate <= '$dateTo')";
         }
 
         $startAt = 0;    //the index of the first issue to return (0-based)
         $maxResult = 500;    // the maximum number of issues to return (defaults to 50).
 
         $jql = implode(' AND ',$jql);
-        var_dump($jql);
         $res = $this->issueService->search($jql, $startAt, $maxResult);
         $this->makeReport($res);
         exit();
@@ -210,6 +221,11 @@ class JiraReport extends \YourResult\MicroService
 //    }
 
     function makeReport($search_result){
+
+        $report_month = date('m');
+        if (isset($_REQUEST['month'])) {
+            $report_month = $_REQUEST['month'];
+        }
 
         foreach ($search_result->issues as $issue) {
             //print_r($issue);
@@ -331,11 +347,12 @@ class JiraReport extends \YourResult\MicroService
 //                        var_dump($_ENV['JIRA_USER']);
                     //
 
+                    $worklog_model = [];
+
                     if ((($_ENV['JIRA_FLD_WORKLOG_ANY_AUTHOR'] == 0) && ($a[$wl_key] == $_ENV['JIRA_USER']))
                         || ($_ENV['JIRA_FLD_WORKLOG_ANY_AUTHOR'] == 1)
                     ) {
                         $j++;
-
 
                         $log['summary'] = $key . ' ' . $issue->fields->summary;
                         $log['description'] = $issue->fields->description;
@@ -392,6 +409,8 @@ class JiraReport extends \YourResult\MicroService
                                 $arkeys[$key]['time'] .= $arkeys[$key]['minutes'] . 'м. ';
                             }
 
+                            var_dump($log);
+                            exit();
                         }
                     }
                 }
@@ -400,12 +419,6 @@ class JiraReport extends \YourResult\MicroService
 
         }
 
-
-        //print_r($logs01);
-        //echo "-------------------";
-        //print_r($logs02);
-//
-        //exit;
         ksort($logs01);
         ksort($logs02);
 

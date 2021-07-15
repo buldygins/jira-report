@@ -4,11 +4,10 @@
             ?>
             <tr>
                 <td>
-                    <a href='/run?project=<?= $project['nam'] ?>'><?= $project['descr'] ?></a>
+                    <a href='/project?project=<?= $project['nam'] ?>'><?= $project['descr'] ?></a>
                 </td>
             </tr>
-            <?php
-        }
+            <?php  }
         ?>
     </table>
 </div>

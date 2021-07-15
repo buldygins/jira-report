@@ -404,3 +404,41 @@ Jul 12 18:49:15 [info] CREATE TABLE `settings_fields` (
 `type` varchar(255) DEFAULT 'text',
  PRIMARY KEY (`id`)) Engine=InnoDB;
 Jul 12 18:49:15 [info] INSERT INTO migrations (version) VALUES ('20210712152716')
+Jul 15 17:34:18 [info] SELECT version FROM migrations
+Jul 15 17:34:18 [info] SELECT version FROM migrations
+Jul 15 17:34:18 [info] SELECT version FROM migrations
+Jul 15 17:34:18 [info] CREATE TABLE `users` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`displayName` varchar(255),
+`accountId` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 15 17:34:18 [info] INSERT INTO migrations (version) VALUES ('20210715143314')
+Jul 15 18:15:35 [info] SELECT version FROM migrations
+Jul 15 18:15:35 [info] SELECT version FROM migrations
+Jul 15 18:15:35 [info] SELECT version FROM migrations
+Jul 15 18:15:35 [info] CREATE TABLE `project_desks` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`key` varchar(255),
+`project_id` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 15 18:15:35 [info] INSERT INTO migrations (version) VALUES ('20210715144956')
+Jul 15 18:15:35 [info] CREATE TABLE `worklog` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`task_id` varchar(255),
+`task_key` varchar(255),
+`started` varchar(255),
+`seconds_all` int(11),
+`hours` int(11),
+`minutes` int(11),
+`time` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 15 18:15:35 [info] INSERT INTO migrations (version) VALUES ('20210715145006')
+Jul 15 18:15:35 [info] CREATE TABLE `tasks` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`key` varchar(255),
+`summary` varchar(255),
+`status` varchar(255),
+`priority` varchar(255),
+`description` text,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 15 18:15:35 [info] INSERT INTO migrations (version) VALUES ('20210715145251')
