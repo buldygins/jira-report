@@ -1,9 +1,13 @@
-JIRA_HOST="https://klienti.atlassian.net/"
+JIRA_HOST="https://jira.klienti.ru"
 JIRA_USER="v.smorodinsky"
 JIRA_PASS="9030404"
+JIRA_FILTER="project = MASTER"
 JIRA_FLD_WORKLOG_AUTHOR='name'
 # Учитывать любого отметившего время
-JIRA_FLD_WORKLOG_ANY_AUTHOR=0
+JIRA_FLD_WORKLOG_ANY_AUTHOR=1
+# JIRA_FILTER="(assignee = currentUser() or watcher = currentUser())"
+
+
 # to enable session cookie authorization
 # COOKIE_AUTH_ENABLED=true
 # COOKIE_FILE=storage/jira-cookie.txt
@@ -13,19 +17,15 @@ JIRA_FLD_WORKLOG_ANY_AUTHOR=0
 #PROXY_USER="proxy-username"
 #PROXY_PASSWORD="proxy-password"
 
-JIRA_FILTER="(assignee = currentUser() or watcher = currentUser())"
-
-DB_NAME=jira
+DB_NAME=jira_report_our24_db
 DB_USER=root
-DB_PASS=root
-
-REPORT_SHOW_LOGGED_ONLY=1   #0=false, 1=true
-REPORT_SHOW_TIME=show
-# REPORT_SHOW_TIME=hide
-REPORT_SHOW_TRUD=show
-REPORT_SHOW_COST=show
-REPORT_SHOW_STATUS=hide
+DB_PASS=
 
 JIRA_REST_API_V3=false
 
-COST_HOUR=1522
+REPORT_SHOW_LOGGED_ONLY=0
+REPORT_SHOW_TIME=hide
+REPORT_SHOW_TRUD=hide
+REPORT_SHOW_COST=hide
+REPORT_SHOW_STATUS=show
+COST_HOUR=914
