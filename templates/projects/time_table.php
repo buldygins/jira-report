@@ -9,22 +9,29 @@
     </thead>
     <tbody>
     <?php foreach ($tasks as $task):
+        $task_time = 0;
         ?>
         <tr>
             <td><?= $task->project_key ?> <?= $task->summary ?></td>
             <?php for ($i = 1; $i < $days; $i++):
-                $task_time = 0;
+
                 if (isset($time[$task->project_key][$i])) {
-                    $time = intdiv($time[$task->project_key][$i], 3600);
                     $task_time += $time[$task->project_key][$i];
                     ?>
-                    <td class=""><?= $time ?>ч</td>
+                    <td class=""><?= $time[$task->project_key][$i] ?></td>
                 <?php } else {
                     echo '<td></td>';
                 }endfor; ?>
+            <td><?= $time[$task->project_key]['all'] ?></td>
         </tr>
     <?php
     endforeach;
     ?>
+    <tr>
+        <td>Всего за день</td>
+        <?php for ($i = 1; $i < $days; $i++): ?>
+            <td class=""><?= $time[$i]['all'] ?></td>
+        <?php endfor; ?>
+    </tr>
     </tbody>
 </table>

@@ -62,6 +62,11 @@ class Model
 
         $table = self::getTableName();
         $model = $dbpdo->query("SELECT * FROM {$table} WHERE {$where} LIMIT 1");
+//        if (strpos($where, 'CRM-13') !== false) {
+//            var_dump("SELECT * FROM {$table} WHERE {$where} LIMIT 1");
+//            var_dump($model);
+//            var_dump($model->fetch());
+//        }
         $data = $model->fetch();
         if ($data) {
             $model = new static((array)$data);
@@ -99,7 +104,7 @@ class Model
         if ($id[0]['id']) {
             $model = new static(array_merge(['id' => $id[0]['id']], $data));
             $model->createdHook();
-            return $id[0]['id'];
+            return $model;
         }
         return false;
     }
@@ -128,9 +133,8 @@ class Model
         if ($model) {
             $table = self::getTableName();
             $dbpdo->query("UPDATE {$table} SET {$set} WHERE id = {$model->id}");
-            return array_merge((array)$model, $data);
+            return new static(array_merge((array)$model, $data));
         }
-
         return false;
     }
 

@@ -2,23 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="909441cd-32c2-4a88-be71-231ab6ca5166" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/config.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JiraReport.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/JiraReport.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Model.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Worklog.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Worklog.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/logs/development.log" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/logs/development.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/migrations/20200124231148_CreateProjectsTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/migrations/20200124231148_CreateProjectsTable.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/migrations/20210712152659_CreateSettingsTable.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/migrations/20210712152716_CreateSettingsFieldsTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/migrations/20210712152716_CreateSettingsFieldsTable.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/migrations/20210715143314_CreateUsersTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/migrations/20210715143314_CreateJiraUsersTable.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/migrations/20210715144956_CreateProjectDesksTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/migrations/20210715144956_CreateJiraProjectsTable.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/migrations/20210715145006_CreateWorklogTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/migrations/20210715145006_CreateWorklogsTable.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/migrations/20210715145251_CreateTaskTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/migrations/20210715145251_CreateJiraTaskTable.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/projects/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/projects/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/projects/project_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/projects/project_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/SettingsField.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/SettingsField.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Worklog.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Worklog.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/projects/time_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/projects/time_table.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

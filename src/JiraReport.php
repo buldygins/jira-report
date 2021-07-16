@@ -170,7 +170,7 @@ class JiraReport extends \YourResult\MicroService
             } catch (JiraRestApi\JiraException $e) {
                 print("Error Occured! " . $e->getMessage());
             }
-            header('Location: /project/' . $this->curr_project->id . '/desks');
+//            header('Location: /project/' . $this->curr_project->id . '/desks');
         }
     }
 
@@ -201,6 +201,7 @@ class JiraReport extends \YourResult\MicroService
         }
 
         $keys = !empty($arIssues) ? array_keys($arIssues) : [];
+
         foreach ($keys as $key) {
 
             $queryParam = [
@@ -223,6 +224,7 @@ class JiraReport extends \YourResult\MicroService
                 'project_key' => $issue->key,
                 'project_id' => $this->curr_project->id,
             ]);
+
             if (!$task) {
                 $task = JiraTask::create([
                     'project_key' => $issue->key,
@@ -294,8 +296,8 @@ class JiraReport extends \YourResult\MicroService
 
                     $hours = intdiv($worklog->timeSpentSeconds, 3600);
                     $wl_data = [
-                        'task_id' => $task['id'],
-                        'task_key' => $task['project_key'],
+                        'task_id' => $task->id,
+                        'task_key' => $task->project_key,
                         'started' => $date_string,
                         'seconds_all' => $worklog->timeSpentSeconds,
                         'hours' => $hours,
@@ -309,7 +311,7 @@ class JiraReport extends \YourResult\MicroService
                     if ($wl_data['minutes'] > 0) {
                         $wl_data['time'] .= $wl_data['minutes'] . 'м. ';
                     }
-                    $found_worklog = Worklog::find(['task_id' => $task['id'], 'started' => $worklog->started]);
+                    $found_worklog = Worklog::find(['task_id' => $task->id, 'started' => $worklog->started]);
                     if (!$found_worklog) {
                         $found_worklog = Worklog::create($wl_data);
                     } else {
@@ -393,7 +395,7 @@ class JiraReport extends \YourResult\MicroService
             $tasks = JiraTask::whereGet(['project_key LIKE:' => $project->jira_key . '%']);
             $worklogs = Worklog::whereGet(array_merge($find, ['task_key LIKE:' => $project->jira_key . '%']));
             $time = Worklog::getWorklogsTime($worklogs);
-            $output = $this->loadTemplate(realpath('templates/projects/time_table.php'),
+            $output .= $this->loadTemplate(realpath('templates/projects/time_table.php'),
                 [
                     'tasks' => $tasks,
                     'time' => $time,
@@ -403,10 +405,5 @@ class JiraReport extends \YourResult\MicroService
         $this->render($output);
 
 
-        exit();
-        var_dump($this->curr_desk);
-        $worklogs = Worklog::whereGet(['task_key LIKE:' => $this->curr_desk->jira_key . '%', 'started >:' => date('Y-m-01 00:00:00')]);
-        var_dump($worklogs);
-        exit();
     }
 }
