@@ -4,8 +4,9 @@
             ?>
             <tr>
                 <td>
-                    <a href='/getDesk?project=<?= $_GET['project'] ?>&desk=<?= $project->key ?>'><?= $project->name ?> ( <?= $project->key ?> )</a>
+                    <a href='/project/<?= $this->curr_project->id ?>/desk/<?= $project->jira_key ?>/report'><?= $project->jira_key ?></a>
                 </td>
+
             </tr>
             <?php
         }

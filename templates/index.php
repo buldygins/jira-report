@@ -13,22 +13,19 @@
                         <a class="nav-link" href="/projects">Проекты</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" href="#">Отчеты</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Настройки
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Сменить проект</a>
-                            <a class="dropdown-item" href="/settings">Изменить настройки</a>
-<!--                            <div class="dropdown-divider"></div>-->
+<!--                    <li class="nav-item dropdown">-->
+<!--                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                            Настройки-->
+<!--                        </a>-->
+<!--                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--                            <a class="dropdown-item" href="#">Сменить проект</a>-->
+<!--                            <a class="dropdown-item" href="/settings">Изменить настройки</a>-->
+<!--                           <div class="dropdown-divider"></div>-->
 <!--                            <a class="dropdown-item" href="#">Something else here</a>-->
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
-                    </li>
+<!--                        </div>-->
+<!--                    </li>-->
                 </ul>
             </div>
         </nav>

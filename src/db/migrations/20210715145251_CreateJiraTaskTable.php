@@ -1,20 +1,21 @@
 <?php
 
-class CreateTaskTable extends Ruckusing_Migration_Base
+class CreateJiraTaskTable extends Ruckusing_Migration_Base
 {
     public function up()
     {
-        $t = $this->create_table('tasks', ['id' => true, 'options' => 'Engine=InnoDB']);
-        $t->column('key', 'string');
+        $t = $this->create_table('jira_tasks', ['id' => true, 'options' => 'Engine=InnoDB']);
+        $t->column('project_key', 'string');
         $t->column('summary','string');
         $t->column('status','string');
         $t->column('priority','string');
         $t->column('description','text');
+        $t->column('project_id','string');
         $t->finish();
     }//up()
 
     public function down()
     {
-        $this->drop_table("tasks");
+        $this->drop_table("jira_tasks");
     }//down()
 }

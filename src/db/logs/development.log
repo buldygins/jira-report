@@ -442,3 +442,911 @@ Jul 15 18:15:35 [info] CREATE TABLE `tasks` (
 `description` text,
  PRIMARY KEY (`id`)) Engine=InnoDB;
 Jul 15 18:15:35 [info] INSERT INTO migrations (version) VALUES ('20210715145251')
+Jul 16 10:32:11 [info] SELECT version FROM migrations
+Jul 16 10:32:11 [info] SELECT version FROM migrations
+Jul 16 10:32:11 [info] SELECT version FROM migrations
+Jul 16 10:33:33 [info] SELECT version FROM migrations
+Jul 16 10:33:33 [info] SELECT version FROM migrations
+Jul 16 10:33:33 [info] SELECT version FROM migrations
+Jul 16 10:33:33 [info] DROP TABLE IF EXISTS `tasks`
+Jul 16 10:33:33 [info] DELETE FROM migrations WHERE version = '20210715145251'
+Jul 16 10:33:33 [info] DROP TABLE IF EXISTS `users`
+Jul 16 10:33:33 [info] DELETE FROM migrations WHERE version = '20210715145006'
+Jul 16 10:33:33 [info] DROP TABLE IF EXISTS `project_desks`
+Jul 16 10:33:33 [info] DELETE FROM migrations WHERE version = '20210715144956'
+Jul 16 10:33:33 [info] DROP TABLE IF EXISTS `users`
+Jul 16 10:33:33 [info] DELETE FROM migrations WHERE version = '20210715143314'
+Jul 16 10:33:33 [info] DROP TABLE IF EXISTS `settings_fields`
+Jul 16 10:33:33 [info] DELETE FROM migrations WHERE version = '20210712152716'
+Jul 16 10:33:33 [info] DROP TABLE IF EXISTS `settings`
+Jul 16 10:33:33 [info] DELETE FROM migrations WHERE version = '20210712152659'
+Jul 16 10:33:33 [info] DROP TABLE IF EXISTS `projects`
+Jul 16 10:33:33 [info] DELETE FROM migrations WHERE version = '20200124231148'
+Jul 16 10:33:57 [info] SELECT version FROM migrations
+Jul 16 10:33:57 [info] SELECT version FROM migrations
+Jul 16 10:33:57 [info] SELECT version FROM migrations
+Jul 16 10:33:57 [info] CREATE TABLE `projects` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(50),
+`url` varchar(255),
+`descr` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 10:33:57 [info] CREATE UNIQUE INDEX `idx_projects_nam` ON `projects`(`nam`)
+Jul 16 10:33:57 [info] INSERT INTO migrations (version) VALUES ('20200124231148')
+Jul 16 10:33:57 [info] CREATE TABLE `settings` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`setting_id` int(11),
+`setting_field_id` int(11),
+`value` int(11),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 10:33:57 [info] INSERT INTO migrations (version) VALUES ('20210712152659')
+Jul 16 10:33:57 [info] CREATE TABLE `settings_fields` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`name` varchar(255),
+`title` varchar(255),
+`default` varchar(255),
+`type` varchar(255) DEFAULT 'text',
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 10:33:57 [info] INSERT INTO migrations (version) VALUES ('20210712152716')
+Jul 16 10:34:04 [info] SELECT version FROM migrations
+Jul 16 10:34:04 [info] SELECT version FROM migrations
+Jul 16 10:34:04 [info] SELECT version FROM migrations
+Jul 16 10:34:04 [info] CREATE TABLE `jira_users` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`displayName` varchar(255),
+`accountId` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 10:34:04 [info] INSERT INTO migrations (version) VALUES ('20210715143314')
+Jul 16 10:34:04 [info] CREATE TABLE `project_desks` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`key` varchar(255),
+`project_id` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 10:34:04 [info] INSERT INTO migrations (version) VALUES ('20210715144956')
+Jul 16 10:34:04 [info] CREATE TABLE `worklog` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`task_id` varchar(255),
+`task_key` varchar(255),
+`started` varchar(255),
+`seconds_all` int(11),
+`hours` int(11),
+`minutes` int(11),
+`time` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 10:34:27 [info] SELECT version FROM migrations
+Jul 16 10:34:27 [info] SELECT version FROM migrations
+Jul 16 10:34:27 [info] SELECT version FROM migrations
+Jul 16 10:34:27 [info] DROP TABLE IF EXISTS `project_desks`
+Jul 16 10:34:27 [info] DELETE FROM migrations WHERE version = '20210715144956'
+Jul 16 10:34:27 [info] DROP TABLE IF EXISTS `jira_users`
+Jul 16 10:34:27 [info] DELETE FROM migrations WHERE version = '20210715143314'
+Jul 16 10:34:27 [info] DROP TABLE IF EXISTS `settings_fields`
+Jul 16 10:34:27 [info] DELETE FROM migrations WHERE version = '20210712152716'
+Jul 16 10:34:27 [info] DROP TABLE IF EXISTS `settings`
+Jul 16 10:34:27 [info] DELETE FROM migrations WHERE version = '20210712152659'
+Jul 16 10:34:27 [info] DROP TABLE IF EXISTS `projects`
+Jul 16 10:34:27 [info] DELETE FROM migrations WHERE version = '20200124231148'
+Jul 16 10:34:27 [info] DROP TABLE IF EXISTS `events_subscribe`
+Jul 16 10:34:27 [info] DELETE FROM migrations WHERE version = '20200106052704'
+Jul 16 10:34:27 [info] DROP TABLE IF EXISTS `events_services`
+Jul 16 10:34:27 [info] DELETE FROM migrations WHERE version = '20200106050550'
+Jul 16 10:34:27 [info] DROP TABLE IF EXISTS `sent_token`
+Jul 16 10:34:27 [info] DELETE FROM migrations WHERE version = '20200106020650'
+Jul 16 10:34:27 [info] DROP TABLE IF EXISTS `listen_events`
+Jul 16 10:34:27 [info] DELETE FROM migrations WHERE version = '20200105231247'
+Jul 16 10:34:27 [info] DROP TABLE IF EXISTS `events`
+Jul 16 10:34:27 [info] DELETE FROM migrations WHERE version = '20200105231209'
+Jul 16 10:34:27 [info] DROP TABLE IF EXISTS `services`
+Jul 16 10:34:27 [info] DELETE FROM migrations WHERE version = '20200105231148'
+Jul 16 10:34:40 [info] SELECT version FROM migrations
+Jul 16 10:34:40 [info] SELECT version FROM migrations
+Jul 16 10:34:40 [info] SELECT version FROM migrations
+Jul 16 10:34:40 [info] CREATE TABLE `services` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(50),
+`url` varchar(255),
+`descr` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 10:34:40 [info] CREATE UNIQUE INDEX `idx_services_nam` ON `services`(`nam`)
+Jul 16 10:34:40 [info] INSERT INTO migrations (version) VALUES ('20200105231148')
+Jul 16 10:34:40 [info] CREATE TABLE `events` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(255),
+`service` varchar(255),
+`subject` varchar(255),
+`body` text,
+`created_at` datetime,
+`expired_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 10:34:40 [info] INSERT INTO migrations (version) VALUES ('20200105231209')
+Jul 16 10:34:40 [info] CREATE TABLE `listen_events` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(255),
+`service` varchar(50),
+`id_in_service` int(11),
+`subject` varchar(255),
+`body` text,
+`created_at` datetime,
+`expired_at` datetime,
+`come_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 10:34:40 [info] CREATE UNIQUE INDEX `idx_listen_events_service_and_id_in_service` ON `listen_events`(`service`, `id_in_service`)
+Jul 16 10:34:40 [info] INSERT INTO migrations (version) VALUES ('20200105231247')
+Jul 16 10:34:40 [info] CREATE TABLE `sent_token` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`id_token` int(11),
+`service` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 10:34:40 [info] INSERT INTO migrations (version) VALUES ('20200106020650')
+Jul 16 10:34:40 [info] CREATE TABLE `events_services` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`service` varchar(50),
+`event_nam` varchar(50),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 10:34:40 [info] CREATE UNIQUE INDEX `idx_events_services_service_and_event_nam` ON `events_services`(`service`, `event_nam`)
+Jul 16 10:34:40 [info] INSERT INTO migrations (version) VALUES ('20200106050550')
+Jul 16 10:34:40 [info] CREATE TABLE `events_subscribe` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`service_in` varchar(50),
+`service_out` varchar(50),
+`event_nam` varchar(50),
+`func` varchar(50),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 10:34:40 [info] CREATE UNIQUE INDEX `idx_events_subscribe_service_in_and_service_out_and_event_nam` ON `events_subscribe`(`service_in`, `service_out`, `event_nam`)
+Jul 16 10:34:40 [info] INSERT INTO migrations (version) VALUES ('20200106052704')
+Jul 16 10:34:40 [info] CREATE TABLE `projects` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(50),
+`url` varchar(255),
+`descr` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 10:34:40 [info] CREATE UNIQUE INDEX `idx_projects_nam` ON `projects`(`nam`)
+Jul 16 10:34:40 [info] INSERT INTO migrations (version) VALUES ('20200124231148')
+Jul 16 10:34:40 [info] CREATE TABLE `settings` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`setting_id` int(11),
+`setting_field_id` int(11),
+`value` int(11),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 10:34:40 [info] INSERT INTO migrations (version) VALUES ('20210712152659')
+Jul 16 10:34:40 [info] CREATE TABLE `settings_fields` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`name` varchar(255),
+`title` varchar(255),
+`default` varchar(255),
+`type` varchar(255) DEFAULT 'text',
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 10:34:40 [info] INSERT INTO migrations (version) VALUES ('20210712152716')
+Jul 16 10:34:40 [info] CREATE TABLE `jira_users` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`displayName` varchar(255),
+`accountId` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 10:34:40 [info] INSERT INTO migrations (version) VALUES ('20210715143314')
+Jul 16 10:34:40 [info] CREATE TABLE `project_desks` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`key` varchar(255),
+`project_id` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 10:34:41 [info] INSERT INTO migrations (version) VALUES ('20210715144956')
+Jul 16 10:34:41 [info] CREATE TABLE `worklog` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`task_id` varchar(255),
+`task_key` varchar(255),
+`started` varchar(255),
+`seconds_all` int(11),
+`hours` int(11),
+`minutes` int(11),
+`time` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 10:34:41 [info] INSERT INTO migrations (version) VALUES ('20210715145006')
+Jul 16 10:34:41 [info] CREATE TABLE `tasks` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`key` varchar(255),
+`summary` varchar(255),
+`status` varchar(255),
+`priority` varchar(255),
+`description` text,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 10:34:41 [info] INSERT INTO migrations (version) VALUES ('20210715145251')
+Jul 16 11:07:41 [info] SELECT version FROM migrations
+Jul 16 11:07:41 [info] SELECT version FROM migrations
+Jul 16 11:07:41 [info] SELECT version FROM migrations
+Jul 16 11:07:41 [info] DROP TABLE IF EXISTS `tasks`
+Jul 16 11:07:41 [info] DELETE FROM migrations WHERE version = '20210715145251'
+Jul 16 11:07:41 [info] DROP TABLE IF EXISTS `users`
+Jul 16 11:07:41 [info] DELETE FROM migrations WHERE version = '20210715145006'
+Jul 16 11:07:41 [info] DROP TABLE IF EXISTS `project_desks`
+Jul 16 11:07:41 [info] DELETE FROM migrations WHERE version = '20210715144956'
+Jul 16 11:07:41 [info] DROP TABLE IF EXISTS `jira_users`
+Jul 16 11:07:41 [info] DELETE FROM migrations WHERE version = '20210715143314'
+Jul 16 11:07:41 [info] DROP TABLE IF EXISTS `settings_fields`
+Jul 16 11:07:41 [info] DELETE FROM migrations WHERE version = '20210712152716'
+Jul 16 11:07:41 [info] DROP TABLE IF EXISTS `settings`
+Jul 16 11:07:41 [info] DELETE FROM migrations WHERE version = '20210712152659'
+Jul 16 11:07:41 [info] DROP TABLE IF EXISTS `projects`
+Jul 16 11:07:41 [info] DELETE FROM migrations WHERE version = '20200124231148'
+Jul 16 11:07:41 [info] DROP TABLE IF EXISTS `events_subscribe`
+Jul 16 11:07:41 [info] DELETE FROM migrations WHERE version = '20200106052704'
+Jul 16 11:07:41 [info] DROP TABLE IF EXISTS `events_services`
+Jul 16 11:07:41 [info] DELETE FROM migrations WHERE version = '20200106050550'
+Jul 16 11:07:41 [info] DROP TABLE IF EXISTS `sent_token`
+Jul 16 11:07:41 [info] DELETE FROM migrations WHERE version = '20200106020650'
+Jul 16 11:07:41 [info] DROP TABLE IF EXISTS `listen_events`
+Jul 16 11:07:41 [info] DELETE FROM migrations WHERE version = '20200105231247'
+Jul 16 11:07:41 [info] DROP TABLE IF EXISTS `events`
+Jul 16 11:07:41 [info] DELETE FROM migrations WHERE version = '20200105231209'
+Jul 16 11:07:41 [info] DROP TABLE IF EXISTS `services`
+Jul 16 11:07:41 [info] DELETE FROM migrations WHERE version = '20200105231148'
+Jul 16 11:08:48 [info] SELECT version FROM migrations
+Jul 16 11:08:48 [info] SELECT version FROM migrations
+Jul 16 11:08:48 [info] SELECT version FROM migrations
+Jul 16 11:08:48 [info] CREATE TABLE `services` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(50),
+`url` varchar(255),
+`descr` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:08:48 [info] CREATE UNIQUE INDEX `idx_services_nam` ON `services`(`nam`)
+Jul 16 11:08:48 [info] INSERT INTO migrations (version) VALUES ('20200105231148')
+Jul 16 11:08:48 [info] CREATE TABLE `events` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(255),
+`service` varchar(255),
+`subject` varchar(255),
+`body` text,
+`created_at` datetime,
+`expired_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:08:48 [info] INSERT INTO migrations (version) VALUES ('20200105231209')
+Jul 16 11:08:48 [info] CREATE TABLE `listen_events` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(255),
+`service` varchar(50),
+`id_in_service` int(11),
+`subject` varchar(255),
+`body` text,
+`created_at` datetime,
+`expired_at` datetime,
+`come_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:08:48 [info] CREATE UNIQUE INDEX `idx_listen_events_service_and_id_in_service` ON `listen_events`(`service`, `id_in_service`)
+Jul 16 11:08:48 [info] INSERT INTO migrations (version) VALUES ('20200105231247')
+Jul 16 11:08:48 [info] CREATE TABLE `sent_token` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`id_token` int(11),
+`service` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:08:48 [info] INSERT INTO migrations (version) VALUES ('20200106020650')
+Jul 16 11:08:48 [info] CREATE TABLE `events_services` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`service` varchar(50),
+`event_nam` varchar(50),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:08:48 [info] CREATE UNIQUE INDEX `idx_events_services_service_and_event_nam` ON `events_services`(`service`, `event_nam`)
+Jul 16 11:08:48 [info] INSERT INTO migrations (version) VALUES ('20200106050550')
+Jul 16 11:08:48 [info] CREATE TABLE `events_subscribe` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`service_in` varchar(50),
+`service_out` varchar(50),
+`event_nam` varchar(50),
+`func` varchar(50),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:08:48 [info] CREATE UNIQUE INDEX `idx_events_subscribe_service_in_and_service_out_and_event_nam` ON `events_subscribe`(`service_in`, `service_out`, `event_nam`)
+Jul 16 11:08:48 [info] INSERT INTO migrations (version) VALUES ('20200106052704')
+Jul 16 11:08:48 [info] CREATE TABLE `projects` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(50),
+`url` varchar(255),
+`descr` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:08:48 [info] CREATE UNIQUE INDEX `idx_projects_nam` ON `projects`(`nam`)
+Jul 16 11:08:48 [info] INSERT INTO migrations (version) VALUES ('20200124231148')
+Jul 16 11:08:48 [info] CREATE TABLE `settings` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`setting_id` int(11),
+`setting_field_id` int(11),
+`value` int(11),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:08:48 [info] INSERT INTO migrations (version) VALUES ('20210712152659')
+Jul 16 11:08:48 [info] CREATE TABLE `settings_fields` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`name` varchar(255),
+`title` varchar(255),
+`default` varchar(255),
+`type` varchar(255) DEFAULT 'text',
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:08:48 [info] INSERT INTO migrations (version) VALUES ('20210712152716')
+Jul 16 11:08:48 [info] CREATE TABLE `jira_users` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`displayName` varchar(255),
+`accountId` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:08:48 [info] INSERT INTO migrations (version) VALUES ('20210715143314')
+Jul 16 11:08:48 [info] CREATE TABLE `project_desks` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`key` varchar(255),
+`project_id` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:08:48 [info] INSERT INTO migrations (version) VALUES ('20210715144956')
+Jul 16 11:08:48 [info] CREATE TABLE `worklog` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`task_id` varchar(255),
+`task_key` varchar(255),
+`started` varchar(255),
+`seconds_all` int(11),
+`hours` int(11),
+`minutes` int(11),
+`time` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:09:07 [info] SELECT version FROM migrations
+Jul 16 11:09:07 [info] SELECT version FROM migrations
+Jul 16 11:09:07 [info] SELECT version FROM migrations
+Jul 16 11:09:07 [info] CREATE TABLE `worklog` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`task_id` varchar(255),
+`task_key` varchar(255),
+`started` varchar(255),
+`seconds_all` int(11),
+`hours` int(11),
+`minutes` int(11),
+`time` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:09:07 [info] INSERT INTO migrations (version) VALUES ('20210715145006')
+Jul 16 11:09:07 [info] CREATE TABLE `jira_tasks` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`key` varchar(255),
+`summary` varchar(255),
+`status` varchar(255),
+`priority` varchar(255),
+`description` text,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:09:07 [info] INSERT INTO migrations (version) VALUES ('20210715145251')
+Jul 16 11:15:54 [info] SELECT version FROM migrations
+Jul 16 11:15:54 [info] SELECT version FROM migrations
+Jul 16 11:15:54 [info] SELECT version FROM migrations
+Jul 16 11:15:54 [info] DROP TABLE IF EXISTS `jira_tasks`
+Jul 16 11:15:54 [info] DELETE FROM migrations WHERE version = '20210715145251'
+Jul 16 11:15:54 [info] DROP TABLE IF EXISTS `worklog`
+Jul 16 11:15:54 [info] DELETE FROM migrations WHERE version = '20210715145006'
+Jul 16 11:15:54 [info] DROP TABLE IF EXISTS `project_desks`
+Jul 16 11:15:54 [info] DELETE FROM migrations WHERE version = '20210715144956'
+Jul 16 11:15:54 [info] DROP TABLE IF EXISTS `jira_users`
+Jul 16 11:15:54 [info] DELETE FROM migrations WHERE version = '20210715143314'
+Jul 16 11:15:54 [info] DROP TABLE IF EXISTS `settings_fields`
+Jul 16 11:15:54 [info] DELETE FROM migrations WHERE version = '20210712152716'
+Jul 16 11:15:54 [info] DROP TABLE IF EXISTS `settings`
+Jul 16 11:15:54 [info] DELETE FROM migrations WHERE version = '20210712152659'
+Jul 16 11:15:54 [info] DROP TABLE IF EXISTS `projects`
+Jul 16 11:15:54 [info] DELETE FROM migrations WHERE version = '20200124231148'
+Jul 16 11:15:54 [info] DROP TABLE IF EXISTS `events_subscribe`
+Jul 16 11:15:54 [info] DELETE FROM migrations WHERE version = '20200106052704'
+Jul 16 11:15:54 [info] DROP TABLE IF EXISTS `events_services`
+Jul 16 11:15:54 [info] DELETE FROM migrations WHERE version = '20200106050550'
+Jul 16 11:15:54 [info] DROP TABLE IF EXISTS `sent_token`
+Jul 16 11:15:54 [info] DELETE FROM migrations WHERE version = '20200106020650'
+Jul 16 11:15:54 [info] DROP TABLE IF EXISTS `listen_events`
+Jul 16 11:15:54 [info] DELETE FROM migrations WHERE version = '20200105231247'
+Jul 16 11:15:54 [info] DROP TABLE IF EXISTS `events`
+Jul 16 11:15:54 [info] DELETE FROM migrations WHERE version = '20200105231209'
+Jul 16 11:15:54 [info] DROP TABLE IF EXISTS `services`
+Jul 16 11:15:54 [info] DELETE FROM migrations WHERE version = '20200105231148'
+Jul 16 11:16:21 [info] SELECT version FROM migrations
+Jul 16 11:16:21 [info] SELECT version FROM migrations
+Jul 16 11:16:21 [info] SELECT version FROM migrations
+Jul 16 11:16:21 [info] CREATE TABLE `services` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(50),
+`url` varchar(255),
+`descr` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:16:21 [info] CREATE UNIQUE INDEX `idx_services_nam` ON `services`(`nam`)
+Jul 16 11:16:21 [info] INSERT INTO migrations (version) VALUES ('20200105231148')
+Jul 16 11:16:21 [info] CREATE TABLE `events` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(255),
+`service` varchar(255),
+`subject` varchar(255),
+`body` text,
+`created_at` datetime,
+`expired_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:16:21 [info] INSERT INTO migrations (version) VALUES ('20200105231209')
+Jul 16 11:16:21 [info] CREATE TABLE `listen_events` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(255),
+`service` varchar(50),
+`id_in_service` int(11),
+`subject` varchar(255),
+`body` text,
+`created_at` datetime,
+`expired_at` datetime,
+`come_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:16:21 [info] CREATE UNIQUE INDEX `idx_listen_events_service_and_id_in_service` ON `listen_events`(`service`, `id_in_service`)
+Jul 16 11:16:21 [info] INSERT INTO migrations (version) VALUES ('20200105231247')
+Jul 16 11:16:21 [info] CREATE TABLE `sent_token` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`id_token` int(11),
+`service` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:16:21 [info] INSERT INTO migrations (version) VALUES ('20200106020650')
+Jul 16 11:16:21 [info] CREATE TABLE `events_services` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`service` varchar(50),
+`event_nam` varchar(50),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:16:21 [info] CREATE UNIQUE INDEX `idx_events_services_service_and_event_nam` ON `events_services`(`service`, `event_nam`)
+Jul 16 11:16:21 [info] INSERT INTO migrations (version) VALUES ('20200106050550')
+Jul 16 11:16:21 [info] CREATE TABLE `events_subscribe` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`service_in` varchar(50),
+`service_out` varchar(50),
+`event_nam` varchar(50),
+`func` varchar(50),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:16:21 [info] CREATE UNIQUE INDEX `idx_events_subscribe_service_in_and_service_out_and_event_nam` ON `events_subscribe`(`service_in`, `service_out`, `event_nam`)
+Jul 16 11:16:21 [info] INSERT INTO migrations (version) VALUES ('20200106052704')
+Jul 16 11:16:21 [info] CREATE TABLE `projects` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(50),
+`url` varchar(255),
+`descr` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:16:21 [info] CREATE UNIQUE INDEX `idx_projects_nam` ON `projects`(`nam`)
+Jul 16 11:16:22 [info] INSERT INTO migrations (version) VALUES ('20200124231148')
+Jul 16 11:16:22 [info] CREATE TABLE `settings` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`setting_id` int(11),
+`setting_field_id` int(11),
+`value` int(11),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:16:22 [info] INSERT INTO migrations (version) VALUES ('20210712152659')
+Jul 16 11:16:22 [info] CREATE TABLE `settings_fields` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`name` varchar(255),
+`title` varchar(255),
+`default` varchar(255),
+`type` varchar(255) DEFAULT 'text',
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:16:22 [info] INSERT INTO migrations (version) VALUES ('20210712152716')
+Jul 16 11:16:22 [info] CREATE TABLE `jira_users` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`displayName` varchar(255),
+`accountId` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:16:22 [info] INSERT INTO migrations (version) VALUES ('20210715143314')
+Jul 16 11:16:22 [info] CREATE TABLE `jira_projects` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`key` varchar(255),
+`project_id` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:16:22 [info] INSERT INTO migrations (version) VALUES ('20210715144956')
+Jul 16 11:16:22 [info] CREATE TABLE `worklog` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`task_id` varchar(255),
+`task_key` varchar(255),
+`started` varchar(255),
+`seconds_all` int(11),
+`hours` int(11),
+`minutes` int(11),
+`time` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:16:22 [info] INSERT INTO migrations (version) VALUES ('20210715145006')
+Jul 16 11:16:22 [info] CREATE TABLE `jira_tasks` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`key` varchar(255),
+`summary` varchar(255),
+`status` varchar(255),
+`priority` varchar(255),
+`description` text,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:16:22 [info] INSERT INTO migrations (version) VALUES ('20210715145251')
+Jul 16 11:18:33 [info] SELECT version FROM migrations
+Jul 16 11:18:33 [info] SELECT version FROM migrations
+Jul 16 11:18:33 [info] SELECT version FROM migrations
+Jul 16 11:18:33 [info] DROP TABLE IF EXISTS `jira_tasks`
+Jul 16 11:18:33 [info] DELETE FROM migrations WHERE version = '20210715145251'
+Jul 16 11:18:33 [info] DROP TABLE IF EXISTS `worklog`
+Jul 16 11:18:33 [info] DELETE FROM migrations WHERE version = '20210715145006'
+Jul 16 11:18:33 [info] DROP TABLE IF EXISTS `jira_projects`
+Jul 16 11:18:33 [info] DELETE FROM migrations WHERE version = '20210715144956'
+Jul 16 11:18:33 [info] DROP TABLE IF EXISTS `jira_users`
+Jul 16 11:18:33 [info] DELETE FROM migrations WHERE version = '20210715143314'
+Jul 16 11:18:33 [info] DROP TABLE IF EXISTS `settings_fields`
+Jul 16 11:18:33 [info] DELETE FROM migrations WHERE version = '20210712152716'
+Jul 16 11:18:33 [info] DROP TABLE IF EXISTS `settings`
+Jul 16 11:18:33 [info] DELETE FROM migrations WHERE version = '20210712152659'
+Jul 16 11:18:33 [info] DROP TABLE IF EXISTS `projects`
+Jul 16 11:18:33 [info] DELETE FROM migrations WHERE version = '20200124231148'
+Jul 16 11:18:33 [info] DROP TABLE IF EXISTS `events_subscribe`
+Jul 16 11:18:33 [info] DELETE FROM migrations WHERE version = '20200106052704'
+Jul 16 11:18:33 [info] DROP TABLE IF EXISTS `events_services`
+Jul 16 11:18:33 [info] DELETE FROM migrations WHERE version = '20200106050550'
+Jul 16 11:18:33 [info] DROP TABLE IF EXISTS `sent_token`
+Jul 16 11:18:33 [info] DELETE FROM migrations WHERE version = '20200106020650'
+Jul 16 11:18:33 [info] DROP TABLE IF EXISTS `listen_events`
+Jul 16 11:18:33 [info] DELETE FROM migrations WHERE version = '20200105231247'
+Jul 16 11:18:33 [info] DROP TABLE IF EXISTS `events`
+Jul 16 11:18:33 [info] DELETE FROM migrations WHERE version = '20200105231209'
+Jul 16 11:18:33 [info] DROP TABLE IF EXISTS `services`
+Jul 16 11:18:33 [info] DELETE FROM migrations WHERE version = '20200105231148'
+Jul 16 11:18:34 [info] SELECT version FROM migrations
+Jul 16 11:18:34 [info] SELECT version FROM migrations
+Jul 16 11:18:34 [info] SELECT version FROM migrations
+Jul 16 11:18:34 [info] CREATE TABLE `services` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(50),
+`url` varchar(255),
+`descr` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:34 [info] CREATE UNIQUE INDEX `idx_services_nam` ON `services`(`nam`)
+Jul 16 11:18:34 [info] INSERT INTO migrations (version) VALUES ('20200105231148')
+Jul 16 11:18:34 [info] CREATE TABLE `events` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(255),
+`service` varchar(255),
+`subject` varchar(255),
+`body` text,
+`created_at` datetime,
+`expired_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:34 [info] INSERT INTO migrations (version) VALUES ('20200105231209')
+Jul 16 11:18:34 [info] CREATE TABLE `listen_events` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(255),
+`service` varchar(50),
+`id_in_service` int(11),
+`subject` varchar(255),
+`body` text,
+`created_at` datetime,
+`expired_at` datetime,
+`come_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:34 [info] CREATE UNIQUE INDEX `idx_listen_events_service_and_id_in_service` ON `listen_events`(`service`, `id_in_service`)
+Jul 16 11:18:34 [info] INSERT INTO migrations (version) VALUES ('20200105231247')
+Jul 16 11:18:34 [info] CREATE TABLE `sent_token` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`id_token` int(11),
+`service` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:34 [info] INSERT INTO migrations (version) VALUES ('20200106020650')
+Jul 16 11:18:34 [info] CREATE TABLE `events_services` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`service` varchar(50),
+`event_nam` varchar(50),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:34 [info] CREATE UNIQUE INDEX `idx_events_services_service_and_event_nam` ON `events_services`(`service`, `event_nam`)
+Jul 16 11:18:34 [info] INSERT INTO migrations (version) VALUES ('20200106050550')
+Jul 16 11:18:34 [info] CREATE TABLE `events_subscribe` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`service_in` varchar(50),
+`service_out` varchar(50),
+`event_nam` varchar(50),
+`func` varchar(50),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:34 [info] CREATE UNIQUE INDEX `idx_events_subscribe_service_in_and_service_out_and_event_nam` ON `events_subscribe`(`service_in`, `service_out`, `event_nam`)
+Jul 16 11:18:34 [info] INSERT INTO migrations (version) VALUES ('20200106052704')
+Jul 16 11:18:34 [info] CREATE TABLE `projects` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`name` varchar(50),
+`url` varchar(255),
+`descr` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:34 [info] CREATE UNIQUE INDEX `idx_projects_nam` ON `projects`(`nam`)
+Jul 16 11:18:41 [info] SELECT version FROM migrations
+Jul 16 11:18:41 [info] SELECT version FROM migrations
+Jul 16 11:18:41 [info] SELECT version FROM migrations
+Jul 16 11:18:41 [info] DROP TABLE IF EXISTS `events_subscribe`
+Jul 16 11:18:41 [info] DELETE FROM migrations WHERE version = '20200106052704'
+Jul 16 11:18:41 [info] DROP TABLE IF EXISTS `events_services`
+Jul 16 11:18:41 [info] DELETE FROM migrations WHERE version = '20200106050550'
+Jul 16 11:18:41 [info] DROP TABLE IF EXISTS `sent_token`
+Jul 16 11:18:41 [info] DELETE FROM migrations WHERE version = '20200106020650'
+Jul 16 11:18:41 [info] DROP TABLE IF EXISTS `listen_events`
+Jul 16 11:18:41 [info] DELETE FROM migrations WHERE version = '20200105231247'
+Jul 16 11:18:41 [info] DROP TABLE IF EXISTS `events`
+Jul 16 11:18:41 [info] DELETE FROM migrations WHERE version = '20200105231209'
+Jul 16 11:18:41 [info] DROP TABLE IF EXISTS `services`
+Jul 16 11:18:41 [info] DELETE FROM migrations WHERE version = '20200105231148'
+Jul 16 11:18:41 [info] DROP TABLE IF EXISTS `version`
+Jul 16 11:18:41 [info] DELETE FROM migrations WHERE version = '20200102221830'
+Jul 16 11:18:43 [info] SELECT version FROM migrations
+Jul 16 11:18:43 [info] SELECT version FROM migrations
+Jul 16 11:18:43 [info] SELECT version FROM migrations
+Jul 16 11:18:43 [info] CREATE TABLE `version` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(64),
+`descr` varchar(64),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:43 [info] INSERT INTO migrations (version) VALUES ('20200102221830')
+Jul 16 11:18:43 [info] CREATE TABLE `services` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(50),
+`url` varchar(255),
+`descr` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:43 [info] CREATE UNIQUE INDEX `idx_services_nam` ON `services`(`nam`)
+Jul 16 11:18:43 [info] INSERT INTO migrations (version) VALUES ('20200105231148')
+Jul 16 11:18:43 [info] CREATE TABLE `events` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(255),
+`service` varchar(255),
+`subject` varchar(255),
+`body` text,
+`created_at` datetime,
+`expired_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:43 [info] INSERT INTO migrations (version) VALUES ('20200105231209')
+Jul 16 11:18:43 [info] CREATE TABLE `listen_events` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(255),
+`service` varchar(50),
+`id_in_service` int(11),
+`subject` varchar(255),
+`body` text,
+`created_at` datetime,
+`expired_at` datetime,
+`come_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:43 [info] CREATE UNIQUE INDEX `idx_listen_events_service_and_id_in_service` ON `listen_events`(`service`, `id_in_service`)
+Jul 16 11:18:43 [info] INSERT INTO migrations (version) VALUES ('20200105231247')
+Jul 16 11:18:43 [info] CREATE TABLE `sent_token` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`id_token` int(11),
+`service` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:43 [info] INSERT INTO migrations (version) VALUES ('20200106020650')
+Jul 16 11:18:43 [info] CREATE TABLE `events_services` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`service` varchar(50),
+`event_nam` varchar(50),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:43 [info] CREATE UNIQUE INDEX `idx_events_services_service_and_event_nam` ON `events_services`(`service`, `event_nam`)
+Jul 16 11:18:43 [info] INSERT INTO migrations (version) VALUES ('20200106050550')
+Jul 16 11:18:43 [info] CREATE TABLE `events_subscribe` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`service_in` varchar(50),
+`service_out` varchar(50),
+`event_nam` varchar(50),
+`func` varchar(50),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:43 [info] CREATE UNIQUE INDEX `idx_events_subscribe_service_in_and_service_out_and_event_nam` ON `events_subscribe`(`service_in`, `service_out`, `event_nam`)
+Jul 16 11:18:43 [info] INSERT INTO migrations (version) VALUES ('20200106052704')
+Jul 16 11:18:43 [info] CREATE TABLE `projects` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`name` varchar(50),
+`url` varchar(255),
+`descr` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:54 [info] SELECT version FROM migrations
+Jul 16 11:18:54 [info] SELECT version FROM migrations
+Jul 16 11:18:54 [info] SELECT version FROM migrations
+Jul 16 11:18:54 [info] CREATE TABLE `projects` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`name` varchar(50),
+`url` varchar(255),
+`descr` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:54 [info] CREATE UNIQUE INDEX `idx_projects_name` ON `projects`(`name`)
+Jul 16 11:18:54 [info] INSERT INTO migrations (version) VALUES ('20200124231148')
+Jul 16 11:18:54 [info] CREATE TABLE `settings` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`setting_id` int(11),
+`setting_field_id` int(11),
+`value` int(11),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:54 [info] INSERT INTO migrations (version) VALUES ('20210712152659')
+Jul 16 11:18:54 [info] CREATE TABLE `settings_fields` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`name` varchar(255),
+`title` varchar(255),
+`default` varchar(255),
+`type` varchar(255) DEFAULT 'text',
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:54 [info] INSERT INTO migrations (version) VALUES ('20210712152716')
+Jul 16 11:18:54 [info] CREATE TABLE `jira_users` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`displayName` varchar(255),
+`accountId` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:54 [info] INSERT INTO migrations (version) VALUES ('20210715143314')
+Jul 16 11:18:54 [info] CREATE TABLE `jira_projects` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`key` varchar(255),
+`project_id` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:54 [info] INSERT INTO migrations (version) VALUES ('20210715144956')
+Jul 16 11:18:54 [info] CREATE TABLE `worklog` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`task_id` varchar(255),
+`task_key` varchar(255),
+`started` varchar(255),
+`seconds_all` int(11),
+`hours` int(11),
+`minutes` int(11),
+`time` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:54 [info] INSERT INTO migrations (version) VALUES ('20210715145006')
+Jul 16 11:18:54 [info] CREATE TABLE `jira_tasks` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`key` varchar(255),
+`summary` varchar(255),
+`status` varchar(255),
+`priority` varchar(255),
+`description` text,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:18:54 [info] INSERT INTO migrations (version) VALUES ('20210715145251')
+Jul 16 11:19:22 [info] SELECT version FROM migrations
+Jul 16 11:19:22 [info] SELECT version FROM migrations
+Jul 16 11:19:22 [info] SELECT version FROM migrations
+Jul 16 11:19:22 [info] DROP TABLE IF EXISTS `jira_tasks`
+Jul 16 11:19:22 [info] DELETE FROM migrations WHERE version = '20210715145251'
+Jul 16 11:19:22 [info] DROP TABLE IF EXISTS `worklog`
+Jul 16 11:19:22 [info] DELETE FROM migrations WHERE version = '20210715145006'
+Jul 16 11:19:22 [info] DROP TABLE IF EXISTS `jira_projects`
+Jul 16 11:19:22 [info] DELETE FROM migrations WHERE version = '20210715144956'
+Jul 16 11:19:22 [info] DROP TABLE IF EXISTS `jira_users`
+Jul 16 11:19:22 [info] DELETE FROM migrations WHERE version = '20210715143314'
+Jul 16 11:19:22 [info] DROP TABLE IF EXISTS `settings_fields`
+Jul 16 11:19:22 [info] DELETE FROM migrations WHERE version = '20210712152716'
+Jul 16 11:19:22 [info] DROP TABLE IF EXISTS `settings`
+Jul 16 11:19:22 [info] DELETE FROM migrations WHERE version = '20210712152659'
+Jul 16 11:19:22 [info] DROP TABLE IF EXISTS `projects`
+Jul 16 11:19:22 [info] DELETE FROM migrations WHERE version = '20200124231148'
+Jul 16 11:19:22 [info] DROP TABLE IF EXISTS `events_subscribe`
+Jul 16 11:19:22 [info] DELETE FROM migrations WHERE version = '20200106052704'
+Jul 16 11:19:22 [info] DROP TABLE IF EXISTS `events_services`
+Jul 16 11:19:22 [info] DELETE FROM migrations WHERE version = '20200106050550'
+Jul 16 11:19:22 [info] DROP TABLE IF EXISTS `sent_token`
+Jul 16 11:19:22 [info] DELETE FROM migrations WHERE version = '20200106020650'
+Jul 16 11:19:22 [info] DROP TABLE IF EXISTS `listen_events`
+Jul 16 11:19:22 [info] DELETE FROM migrations WHERE version = '20200105231247'
+Jul 16 11:19:22 [info] DROP TABLE IF EXISTS `events`
+Jul 16 11:19:22 [info] DELETE FROM migrations WHERE version = '20200105231209'
+Jul 16 11:19:22 [info] DROP TABLE IF EXISTS `services`
+Jul 16 11:19:22 [info] DELETE FROM migrations WHERE version = '20200105231148'
+Jul 16 11:19:23 [info] SELECT version FROM migrations
+Jul 16 11:19:23 [info] SELECT version FROM migrations
+Jul 16 11:19:23 [info] SELECT version FROM migrations
+Jul 16 11:19:23 [info] CREATE TABLE `services` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(50),
+`url` varchar(255),
+`descr` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:19:23 [info] CREATE UNIQUE INDEX `idx_services_nam` ON `services`(`nam`)
+Jul 16 11:19:23 [info] INSERT INTO migrations (version) VALUES ('20200105231148')
+Jul 16 11:19:23 [info] CREATE TABLE `events` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(255),
+`service` varchar(255),
+`subject` varchar(255),
+`body` text,
+`created_at` datetime,
+`expired_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:19:23 [info] INSERT INTO migrations (version) VALUES ('20200105231209')
+Jul 16 11:19:23 [info] CREATE TABLE `listen_events` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`nam` varchar(255),
+`service` varchar(50),
+`id_in_service` int(11),
+`subject` varchar(255),
+`body` text,
+`created_at` datetime,
+`expired_at` datetime,
+`come_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:19:23 [info] CREATE UNIQUE INDEX `idx_listen_events_service_and_id_in_service` ON `listen_events`(`service`, `id_in_service`)
+Jul 16 11:19:23 [info] INSERT INTO migrations (version) VALUES ('20200105231247')
+Jul 16 11:19:23 [info] CREATE TABLE `sent_token` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`id_token` int(11),
+`service` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:19:23 [info] INSERT INTO migrations (version) VALUES ('20200106020650')
+Jul 16 11:19:23 [info] CREATE TABLE `events_services` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`service` varchar(50),
+`event_nam` varchar(50),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:19:23 [info] CREATE UNIQUE INDEX `idx_events_services_service_and_event_nam` ON `events_services`(`service`, `event_nam`)
+Jul 16 11:19:23 [info] INSERT INTO migrations (version) VALUES ('20200106050550')
+Jul 16 11:19:23 [info] CREATE TABLE `events_subscribe` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`service_in` varchar(50),
+`service_out` varchar(50),
+`event_nam` varchar(50),
+`func` varchar(50),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:19:23 [info] CREATE UNIQUE INDEX `idx_events_subscribe_service_in_and_service_out_and_event_nam` ON `events_subscribe`(`service_in`, `service_out`, `event_nam`)
+Jul 16 11:19:23 [info] INSERT INTO migrations (version) VALUES ('20200106052704')
+Jul 16 11:19:23 [info] CREATE TABLE `projects` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`name` varchar(50),
+`url` varchar(255),
+`descr` varchar(255),
+`created_at` datetime,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:19:23 [info] CREATE UNIQUE INDEX `idx_projects_name` ON `projects`(`name`)
+Jul 16 11:19:23 [info] INSERT INTO migrations (version) VALUES ('20200124231148')
+Jul 16 11:19:23 [info] CREATE TABLE `settings` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`setting_id` int(11),
+`setting_field_id` int(11),
+`value` int(11),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:19:23 [info] INSERT INTO migrations (version) VALUES ('20210712152659')
+Jul 16 11:19:23 [info] CREATE TABLE `settings_fields` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`name` varchar(255),
+`title` varchar(255),
+`default` varchar(255),
+`type` varchar(255) DEFAULT 'text',
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:19:23 [info] INSERT INTO migrations (version) VALUES ('20210712152716')
+Jul 16 11:19:23 [info] CREATE TABLE `jira_users` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`displayName` varchar(255),
+`accountId` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:19:23 [info] INSERT INTO migrations (version) VALUES ('20210715143314')
+Jul 16 11:19:23 [info] CREATE TABLE `jira_projects` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`key` varchar(255),
+`project_id` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:19:23 [info] INSERT INTO migrations (version) VALUES ('20210715144956')
+Jul 16 11:19:23 [info] CREATE TABLE `worklog` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`task_id` varchar(255),
+`task_key` varchar(255),
+`started` varchar(255),
+`seconds_all` int(11),
+`hours` int(11),
+`minutes` int(11),
+`time` varchar(255),
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:19:23 [info] INSERT INTO migrations (version) VALUES ('20210715145006')
+Jul 16 11:19:23 [info] CREATE TABLE `jira_tasks` (
+`id` int(11) UNSIGNED auto_increment NOT NULL,
+`key` varchar(255),
+`summary` varchar(255),
+`status` varchar(255),
+`priority` varchar(255),
+`description` text,
+ PRIMARY KEY (`id`)) Engine=InnoDB;
+Jul 16 11:19:23 [info] INSERT INTO migrations (version) VALUES ('20210715145251')
