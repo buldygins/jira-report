@@ -498,9 +498,13 @@ class JiraReport extends \YourResult\MicroService
         $daily_cost = $_REQUEST['daily_cost'] == 'false' || !isset($_REQUEST['daily_cost']);
         foreach ($projects as $project) {
             $tasks = $_REQUEST['all_tasks'] == 'true' ? $project->tasks() : $project->workedTasks($find['started >:'], $find['author_id'] ?? null);
+//            $worklogs = [];
+//            foreach ($tasks as $task){
+//                $worklogs = array_merge($worklogs, Worklog::whereGet(array_merge($find, ['task_key LIKE:' => $project->jira_key . '%'])));
+//            }
             $worklogs = Worklog::whereGet(array_merge($find, ['task_key LIKE:' => $project->jira_key . '%']));
             $time = Worklog::getWorklogsTime($worklogs);
-            $cost = Cost::calculate($worklogs, $project, $user_id, $daily_cost);
+            $costs = Cost::calculate($worklogs, $project, $user_id, $daily_cost);
             $output .= $this->loadTemplate(realpath('templates/projects/time_table.php'),
                 [
                     'project_name' => $project->jira_key,
@@ -508,7 +512,7 @@ class JiraReport extends \YourResult\MicroService
                     'time' => $time,
                     'days' => cal_days_in_month(CAL_GREGORIAN, $month, $year),
                     'date' => sprintf('%d-%s-', $year, $month),
-                    'cost' => $cost,
+                    'costs' => $costs,
                 ]);
         }
         $output .= '</div>';
