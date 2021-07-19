@@ -2,15 +2,18 @@
 
 namespace YourResult;
 
+use JiraRestApi\Configuration\ArrayConfiguration;
 use JiraRestApi\Project\ProjectService;
 use PDO;
 use JiraRestApi\Issue\IssueField;
 use JiraRestApi\Issue\IssueService;
 use JiraRestApi\JiraException;
 use JiraRestApi\User\UserService;
+use YourResult\models\Cost;
 use YourResult\models\JiraProject;
 use YourResult\models\JiraTask;
 use YourResult\models\JiraUser;
+use YourResult\models\Model;
 use YourResult\models\Project;
 use YourResult\models\SettingsField;
 use YourResult\models\Worklog;
@@ -20,62 +23,130 @@ class JiraReport extends \YourResult\MicroService
 
     public $curr_desk = null;
     public $curr_project = null;
+    public $configurations = [];
 
     public function __construct(PDO $db = NULL)
     {
         parent::__construct($db);
+        if (empty($this->configurations)) {
+            $this->configurations = [
+                'jiraHost' => $_ENV['JIRA_HOST'],
+                'jiraUser' => $_ENV['JIRA_USER'],
+                'jiraPassword' => $_ENV['JIRA_PASS'],
+            ];
+        }
     }
 
     function route()
     {
+        if ($_REQUEST['isAjax']) {
+            return $this->ajaxRoutes();
+        }
         parent::route();
         switch ($this->url_parts['params'][1]) {
             case 'addTask':
-                $this->addTask();
-                break;
+                return $this->addTask();
             case 'projects':
-                $this->projects();
-                break;
+                return $this->projects();
             case 'project':
                 if (is_numeric($this->url_parts['params'][2])) {
                     $this->curr_project = Project::find($this->url_parts['params'][2]);
                     if ($this->curr_project) {
-                        switch ($this->url_parts['params'][3]) {
-                            case 'settings':
-                                $this->settings();
-                                break;
-                            case 'sync':
-                                $this->sync();
-                                break;
-                            case 'desks':
-                                $this->getDesks();
-                                break;
-                            case 'desk':
-                                if (isset($this->url_parts['params'][4])) {
-                                    $this->curr_desk = JiraProject::find(['jira_key' => $this->url_parts['params'][4]]);
-                                    $this->makeReport();
-                                    break;
-                                }
-                            case 'report':
-                                $this->makeReport();
-                                break;
-                        }
+                        if (isset($this->url_parts['params'][3]))
+                            switch ($this->url_parts['params'][3]) {
+                                case 'settings':
+                                    return $this->settings();
+                                case 'sync':
+                                    $this->loadProjectToEnv();
+                                    return $this->sync();
+                                case 'costRate':
+                                    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                                        return $this->getCostRateForm();
+                                    } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                                        return $this->createCostRate();
+                                    }
+//                                case 'desk':
+//                                    if (isset($this->url_parts['params'][4])) {
+//                                        $this->curr_desk = JiraProject::find(['jira_key' => $this->url_parts['params'][4]]);
+//                                        return $this->makeReport();
+//                                    }
+                                case 'report':
+                                    return $this->makeReport();
+                                default:
+                                    return $this->set404();
+                            }
+                        //return $this->getDesks();
+                        return $this->set404('WE DON\'T HAVE THAT PAGE YET!');
+                    } else {
+                        return $this->set404('PROJECT NOT FOUND!');
                     }
                 }
                 switch ($this->url_parts['params'][2]) {
                     case 'create':
                         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-                            $this->render($this->loadTemplate(realpath('templates/projects/create.php')));
-                        } else {
-                            $this->createProject();
+                            return $this->render($this->loadTemplate(realpath('templates/projects/create.php')));
+                        } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                            return $this->createProject();
                         }
-                        break;
                 }
-                $this->project();
-                break;
-
-
+            default:
+                return $this->set404();
         }
+    }
+
+    function ajaxRoutes()
+    {
+        foreach ($_REQUEST as $key => $value) {
+            if ($value == '-1') {
+                unset($_REQUEST[$key]);
+            }
+        }
+        switch ($this->url_parts['params'][1]) {
+            case 'project':
+                if (is_numeric($this->url_parts['params'][2])) {
+                    $this->curr_project = Project::find($this->url_parts['params'][2]);
+                    if ($this->curr_project) {
+                        $this->loadProjectToEnv();
+                        if (isset($this->url_parts['params'][3]))
+                            switch ($this->url_parts['params'][3]) {
+                                case 'report':
+                                    $project = !empty($_REQUEST['project_id']) ? JiraProject::whereGet(['id' => $_REQUEST['project_id']]) : [];
+                                    $response = $this->generateReportTable($project, $_REQUEST['month'], $_REQUEST['user_id']);
+                                    echo json_encode(['view' => $response]);
+                                    die();
+                            }
+                    }
+                }
+            default:
+                return $this->set404();
+        }
+    }
+
+    function loadProjectToEnv()
+    {
+        $host = SettingsField::find(['name' => 'JIRA_HOST', 'project_id' => $this->curr_project->id]);
+        $user = SettingsField::find(['name' => 'JIRA_USER', 'project_id' => $this->curr_project->id]);
+        $pass = SettingsField::find(['name' => 'JIRA_PASS', 'project_id' => $this->curr_project->id]);
+        if ((!$host || !$user || !$pass) || (empty($host->value) || empty($user->value) || empty($pass->value))) {
+            $this->set404('ERROR, CHECK PROJECT SETTINGS!');
+        }
+        $this->configurations['jiraHost'] = $host->value;
+        $this->configurations['jiraUser'] = $user->value;
+        $this->configurations['jiraPassword'] = $pass->value;
+    }
+
+    function set404($message = 'NOT FOUND!')
+    {
+        if ($_REQUEST['isAjax']) {
+            echo json_encode([
+                'success' => false,
+                'code' => 404,
+                'message' => 'ERROR 404 NOT FOUND!',
+            ]);
+            die();
+        }
+        echo $this->loadTemplate(realpath('templates/404.php'), compact('message'));
+        return false;
     }
 
     function addTask()
@@ -102,7 +173,7 @@ class JiraReport extends \YourResult\MicroService
         } else {
             //print_r($_REQUEST);
             try {
-                $issueField = new IssueField();
+                $issueField = new IssueField(new ArrayConfiguration($this->configurations));
 
                 $issueField->setProjectKey("BG")->setSummary($_REQUEST['subject'])->setAssigneeName("v.smorodinsky")
                     //->setPriorityName("Critical")
@@ -114,7 +185,7 @@ class JiraReport extends \YourResult\MicroService
                     //->setDueDate('2020-01-19')
                 ;
 
-                $issueService = new IssueService();
+                $issueService = new IssueService(new ArrayConfiguration($this->configurations));
 
                 $ret = $issueService->create($issueField);
 
@@ -141,16 +212,15 @@ class JiraReport extends \YourResult\MicroService
 
     function getDesks()
     {
-        $desks = JiraProject::whereGet(['project_id' => $this->curr_project->id]);
+        $desks = $this->curr_project->desks();
         return $this->render($this->loadTemplate(realpath('templates/projects/index.php'), ['projects' => $desks]));
     }
 
     function sync()
     {
         if ($this->curr_project) {
-            $jira_projects = [];
             try {
-                $project_service = new ProjectService();
+                $project_service = new ProjectService(new ArrayConfiguration($this->configurations));
                 $jira_projects = $project_service->getAllProjects();
                 //fetch users
                 foreach ($jira_projects as $jira_project) {
@@ -170,7 +240,8 @@ class JiraReport extends \YourResult\MicroService
             } catch (JiraRestApi\JiraException $e) {
                 print("Error Occured! " . $e->getMessage());
             }
-//            header('Location: /project/' . $this->curr_project->id . '/desks');
+            header('Location: /project/' . $this->curr_project->id . '/report');
+            return;
         }
     }
 
@@ -187,7 +258,7 @@ class JiraReport extends \YourResult\MicroService
                 $jql .= ' AND ' . $filter->value;
             }
         }
-        $issueService = new IssueService();
+        $issueService = new IssueService(new ArrayConfiguration($this->configurations));
 
         $search_result = $issueService->search($jql, 0, 500);
 
@@ -263,12 +334,6 @@ class JiraReport extends \YourResult\MicroService
             }
             foreach ($worklogs as $worklog) {
 
-//                if (in_array($task['id'],[67,68,69,70,71,72])){
-//                    var_dump($task['id']);
-//                    var_dump($worklog);
-//                    exit();
-//                }
-
                 $wl_key = SettingsField::find(['project_id' => $this->curr_project->id, 'name' => 'JIRA_FLD_WORKLOG_AUTHOR']);
                 $a = (array)$worklog->author;
 
@@ -311,7 +376,7 @@ class JiraReport extends \YourResult\MicroService
                     if ($wl_data['minutes'] > 0) {
                         $wl_data['time'] .= $wl_data['minutes'] . 'м. ';
                     }
-                    $found_worklog = Worklog::find(['task_id' => $task->id, 'started' => $worklog->started]);
+                    $found_worklog = Worklog::find(['task_id' => $task->id, 'started' => $date_string]);
                     if (!$found_worklog) {
                         $found_worklog = Worklog::create($wl_data);
                     } else {
@@ -330,13 +395,21 @@ class JiraReport extends \YourResult\MicroService
 
     function settings()
     {
+        if (isset($_REQUEST['_method'])) {
+            switch ($_REQUEST['_method']) {
+                case 'DELETE':
+                    $this->curr_project->delete();
+                    header('Location: /projects');
+                    break;
+            }
+        }
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             foreach ($_REQUEST['settings'] as $setting_id => $value) {
                 SettingsField::update($setting_id, ['value' => $value]);
             }
             header('Location: /projects');
         }
-        $settings = SettingsField::whereGet(['project_id' => $this->curr_project->id]);
+        $settings = $this->curr_project->settings();
         foreach ($settings as &$setting) {
             $setting = $setting->renderField();
         }
@@ -373,37 +446,93 @@ class JiraReport extends \YourResult\MicroService
         } else {
             header('Location: /projects');
         }
+        return $project;
     }
 
     function makeReport()
     {
         $output = '';
-//        if ($this->curr_desk) {
-//            $find['task_key LIKE:'] = $this->curr_desk->jira_key . '%';
-//        } else {
-        $projects = JiraProject::whereGet(['project_id' => $this->curr_project->id]);
-//            $keys = [];
-//            foreach ($projects as $project) {
-//                $keys[] = $project->jira_key . '%';
-//            }
-//            $find['task_key LIKE:'] = $keys;
-//        }
-        $month = date('m');
-        $year = date('Y');
-        $find['started >:'] = date('Y-m-01 00:00:00');
+
+        $users = $this->query("SELECT u.id, u.displayName FROM jira_users u
+                  LEFT JOIN worklogs w on u.id = w.author_id
+                  LEFT JOIN jira_tasks t on t.id = w.task_id
+                  WHERE t.project_id = {$this->curr_project->id}
+                  GROUP BY u.id")->fetchAll();
+        foreach ($users as $user) {
+            $user_filter[$user['id']] = $user['displayName'];
+        }
+        $projects = $this->curr_project->desks();
         foreach ($projects as $project) {
-            $tasks = JiraTask::whereGet(['project_key LIKE:' => $project->jira_key . '%']);
+            $project_filter[$project->id] = $project->jira_key;
+        }
+        $output .= $this->loadTemplate(realpath('templates/projects/report_filters.php'),
+            [
+                'users' => $user_filter ?? [],
+                'projects' => $project_filter ?? [],
+            ]);
+        $output .= $this->generateReportTable($projects);
+        return $this->render($output);
+    }
+
+    function generateReportTable($projects = [], $date = '', $user_id = null)
+    {
+
+        $date = !empty($date) ? $date : date('Y-m');
+        $date = explode('-', $date);
+        $year = $date[0];
+        $month = $date[1];
+
+        $find['started >:'] = sprintf("%d-%s-01 00:00:00", $year, $month);
+
+        $next_month = date('m', strtotime('+1 month', strtotime(sprintf('%d-%s-01', $year, $month))));
+        $find['started <:'] = sprintf("%d-%s-01 00:00:00", $year, $next_month);
+        if ($user_id) {
+            $find['author_id'] = $user_id;
+        }
+
+        $output = '<div id="report">';
+
+        if (empty($projects)) {
+            $projects = $this->curr_project->desks();
+        }
+        $daily_cost = $_REQUEST['daily_cost'] == 'false' || !isset($_REQUEST['daily_cost']);
+        foreach ($projects as $project) {
+            $tasks = $_REQUEST['all_tasks'] == 'true' ? $project->tasks() : $project->workedTasks($find['started >:'], $find['author_id'] ?? null);
             $worklogs = Worklog::whereGet(array_merge($find, ['task_key LIKE:' => $project->jira_key . '%']));
             $time = Worklog::getWorklogsTime($worklogs);
+            $cost = Cost::calculate($worklogs, $project, $user_id, $daily_cost);
             $output .= $this->loadTemplate(realpath('templates/projects/time_table.php'),
                 [
+                    'project_name' => $project->jira_key,
                     'tasks' => $tasks,
                     'time' => $time,
-                    'days' => cal_days_in_month(CAL_GREGORIAN, $month,$year),
+                    'days' => cal_days_in_month(CAL_GREGORIAN, $month, $year),
+                    'date' => sprintf('%d-%s-', $year, $month),
+                    'cost' => $cost,
                 ]);
         }
-        $this->render($output);
+        $output .= '</div>';
 
+        return $output;
+    }
 
+    function getCostRateForm()
+    {
+        $desks = $this->curr_project->desks();
+        $users = JiraUser::all();
+        return $this->render($this->loadTemplate(realpath('templates/settings/cost_rate.php'), compact('desks', 'users')));
+    }
+
+    function createCostRate()
+    {
+        $data['name'] = 'COST_';
+        $data['name'] .= isset($_REQUEST['hourly']) ? 'HOUR_' : 'DAY_';
+        $data['name'] .= $_REQUEST['entity_id'];
+        $data['title'] = 'Ставка для ' . $_REQUEST['title'];
+        $data['title'] .= isset($_REQUEST['hourly']) ? ' (день)' : ' (час)';
+        $data['value'] = $_REQUEST['rate'];
+        $data['project_id'] = $this->curr_project->id;
+        Cost::create($data);
+        header('Location: /project/'.$this->curr_project->id.'/settings');
     }
 }

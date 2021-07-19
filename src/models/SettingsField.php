@@ -17,8 +17,8 @@ class SettingsField extends Model
         switch ($this->type) {
             case 'checkbox':
                 $checked = $this->value == 'on' ? 'checked' : '';
-                return sprintf('<div class="form-group"><label>%s<input class="form-control" type="checkbox" name="settings[%s]" %s></label></div>',
-                    $this->title, $this->id, $checked);
+                return sprintf('<div class="form-check"><input class="form-check-input" type="checkbox" name="settings[%s]" %s><label>%s</label></div>',
+                     $this->id, $checked, $this->title);
             case 'text':
             default:
                 return sprintf('<div class="form-group"><label>%s<input class="form-control" type="text" name="settings[%s]" value="%s"></label></div>',

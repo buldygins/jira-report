@@ -33,7 +33,10 @@ class Model
     public
     static function getTableName()
     {
-        return Inflect::pluralize(strtolower(preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', basename(static::class))));
+        if (get_parent_class(static::class) == self::class) {
+            return Inflect::pluralize(strtolower(preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', basename(static::class))));
+        }
+        return get_parent_class(static::class)::getTableName();
     }
 
     public
@@ -62,11 +65,7 @@ class Model
 
         $table = self::getTableName();
         $model = $dbpdo->query("SELECT * FROM {$table} WHERE {$where} LIMIT 1");
-//        if (strpos($where, 'CRM-13') !== false) {
-//            var_dump("SELECT * FROM {$table} WHERE {$where} LIMIT 1");
-//            var_dump($model);
-//            var_dump($model->fetch());
-//        }
+
         $data = $model->fetch();
         if ($data) {
             $model = new static((array)$data);
@@ -85,20 +84,19 @@ class Model
             return false;
         }
 
-        $keys = '';
-        $values = '';
-        while ($key = array_search(null, $data)) {
-            $keys .= $key . ',';
-            $values .= 'null,';
-            unset($data[$key]);
+        foreach ($data as $key => $value) {
+            $arr_values[':' . $key] = $value;
         }
-        $data = array_map(function ($el) {
-            return "'{$el}'";
-        }, $data);
-        $keys .= implode(',', array_keys($data));
-        $values .= implode(",", $data);
 
         $table = self::getTableName();
+
+        $keys = implode(',', array_keys($data));
+        $values = implode(",", array_keys($arr_values));
+
+        $pre_query = $dbpdo->prepare("INSERT INTO {$table} ({$keys}) VALUES ({$values})");
+
+        $pre_query->execute($arr_values);
+
         $dbpdo->query("INSERT INTO {$table} ({$keys}) VALUES ({$values})");
         $id = $dbpdo->query("SELECT LAST_INSERT_ID() as id")->fetchAll();
         if ($id[0]['id']) {
@@ -181,24 +179,27 @@ class Model
         $where = [];
         $or_where = [];
         foreach ($data as $field_key => $value) {
-            if (is_array($value) && count($value) > 1) {
+            if (is_array($value) && count($value) >= 1) {
                 foreach ($value as $or_value) {
                     if (strpos($field_key, ':') !== false) {
                         $new_field_key = substr($field_key, 0, -1);
-                        $or_where[] = sprintf("%s '%s'", $new_field_key, $or_value);
+                        $format = "%s '%s'";
                     } else {
-                        $or_where[] = sprintf("%s = '%s' ", $field_key, $or_value);
+                        $format = "%s = '%s'";
                     }
+                    $or_where[] = sprintf($format, $new_field_key ?? $field_key, $or_value);
                 }
                 $where[] = '(' . implode(' OR ', $or_where) . ')';
             } else {
                 if (strpos($field_key, ':') !== false) {
                     $new_field_key = substr($field_key, 0, -1);
-                    $where[] = sprintf("%s '%s'", $new_field_key, $value);
+                    $format = "%s '%s'";
                 } else {
-                    $where[] = sprintf("%s = '%s' ", $field_key, $value);
+                    $format = "%s = '%s'";
                 }
+                $where[] = sprintf($format, $new_field_key ?? $field_key, $value);
             }
+            unset($new_field_key);
         }
         $where = implode(' AND ', $where);
         if (empty($where)) {
@@ -214,16 +215,30 @@ class Model
         return $return_objects;
     }
 
-    public
-    function createdHook()
+    public function createdHook()
     {
 
     }
 
-    public
-    function alwaysHook()
+    public function alwaysHook()
     {
 
+    }
+
+    public function deletedHook()
+    {
+
+    }
+
+    public function delete()
+    {
+        global $dbpdo;
+        $table = static::getTableName();
+        if ($dbpdo->exec("DELETE FROM {$table} WHERE id = {$this->id}")) {
+            $this->deletedHook();
+            return true;
+        }
+        return false;
     }
 
 }

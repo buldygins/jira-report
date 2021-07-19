@@ -1,5 +1,4 @@
 <?php
-//print_r($_REQUEST); exit;
 
 if (file_exists('.env')) {
     $dotenv = \Dotenv\Dotenv::create(__DIR__);
