@@ -338,6 +338,9 @@ class JiraReport extends \YourResult\MicroService
                 $a = (array)$worklog->author;
 
                 $accountId = $worklog->author->accountId;
+                if (!$accountId){
+                    $accountId = $worklog->author['accountId'];
+                }
                 if (strpos($accountId, ':') !== false) {
                     $jira_user1 = JiraUser::find(['accountId' => $accountId]);
                     $newAccId = substr($accountId, 0, strpos($accountId, ':'));
@@ -346,18 +349,13 @@ class JiraReport extends \YourResult\MicroService
                 } else {
                     $worker = JiraUser::find(['accountId' => $accountId]);
                 }
-//                if (!$worker){
-//                    var_dump($worklog);
-//                    var_dump(strpos($accountId,':'));
-//                    var_dump($accountId);
-//                    var_dump(substr($accountId, 0, strpos($accountId,':')));
-//                    exit();
-//                }
                 if ((($_ENV['JIRA_FLD_WORKLOG_ANY_AUTHOR'] == 0) && ($a[$wl_key] == $_ENV['JIRA_USER']))
                     || ($_ENV['JIRA_FLD_WORKLOG_ANY_AUTHOR'] == 1)
                 ) {
                     $date_array = date_parse($worklog->started);
                     $date_string = date('Y-m-d H:i:s', mktime($date_array['hour'], $date_array['minute'], $date_array['second'], $date_array['month'], $date_array['day'], $date_array['year']));
+
+
 
                     $hours = intdiv($worklog->timeSpentSeconds, 3600);
                     $wl_data = [
@@ -369,6 +367,7 @@ class JiraReport extends \YourResult\MicroService
                         'minutes' => (int)($worklog->timeSpentSeconds - $hours * 3600) / 60,
                         'author_id' => $worker->id,
                     ];
+
                     $wl_data['time'] = '';
                     if ($wl_data['hours'] > 0) {
                         $wl_data['time'] .= $wl_data['hours'] . 'ч ';
@@ -376,6 +375,7 @@ class JiraReport extends \YourResult\MicroService
                     if ($wl_data['minutes'] > 0) {
                         $wl_data['time'] .= $wl_data['minutes'] . 'м. ';
                     }
+                  
                     $found_worklog = Worklog::find(['task_id' => $task->id, 'started' => $date_string]);
                     if (!$found_worklog) {
                         $found_worklog = Worklog::create($wl_data);

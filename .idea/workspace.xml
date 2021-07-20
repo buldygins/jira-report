@@ -4,8 +4,6 @@
     <list default="true" id="909441cd-32c2-4a88-be71-231ab6ca5166" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JiraReport.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/JiraReport.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Cost.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Cost.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/projects/time_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/projects/time_table.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
