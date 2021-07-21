@@ -7,15 +7,20 @@ namespace YourResult\models;
 class Cost extends SettingsField
 {
 
-    public static function calculate($worklogs, $project, $user_id, $daily = true)
+    public static function calculate($worklogs, $project, $user_id = null, $daily = true)
     {
         $name = $daily ? 'COST_DAY' : 'COST_HOUR';
-        $costs[] = self::find(['name' => $name . '_U_' . $user_id, 'project_id' => $project->project_id]);
-        $costs[] = self::find(['name' => $name . '_P_' . $project->id, 'project_id' => $project->project_id]);
+        if ($user_id){
+            $costs[] = self::find(['name' => $name . '_U_' . $user_id, 'project_id' => $project->project_id]);
+        }
+        if ($project){
+            $costs[] = self::find(['name' => $name . '_P_' . $project->id, 'project_id' => $project->project_id]);
+        }
         $costs[] = self::find(['name' => $name, 'project_id' => $project->project_id]);
         $costs = array_filter($costs, function ($el) {
             return $el != false;
         });
+
         if (empty($costs)) {
             $costs[] = new self(['value' => 0]);
         }
@@ -30,7 +35,14 @@ class Cost extends SettingsField
             }
             foreach ($costs as $cost) {
                 $rate = $cost->value . ' р/д';
-                $return[] = ['calculated' => count($days_worked) * $cost->value, 'rate' => $rate];
+                if (strpos($cost->name, '_U_') !== false) {
+                    $additional = '( индивидуальная )';
+                } elseif (strpos($cost->name, '_P_') !== false) {
+                    $additional = '( проектная )';
+                } else {
+                    $additional = '( базовая )';
+                }
+                $return[] = ['calculated' => count($days_worked) * $cost->value, 'rate' => $rate, 'additional' => $additional];
             }
         } else {
             $all_time = 0;
@@ -40,7 +52,14 @@ class Cost extends SettingsField
             $all_time = $all_time / 3600;
             foreach ($costs as $cost) {
                 $rate = $cost->value . ' р/ч';
-                $return[] = ['calculated' => $all_time * $cost->value, 'rate' => $rate];
+                if (strpos($cost->name, '_U_') !== false) {
+                    $additional = '( индивидуальная )';
+                } elseif (strpos($cost->name, '_P_') !== false) {
+                    $additional = '( проектная )';
+                } else {
+                    $additional = '( базовая )';
+                }
+                $return[] = ['calculated' => $all_time * $cost->value, 'rate' => $rate, 'additional' => $additional];
             }
 
         }

@@ -4,6 +4,12 @@
     <list default="true" id="909441cd-32c2-4a88-be71-231ab6ca5166" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JiraReport.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/JiraReport.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Cost.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Cost.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/SettingsField.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/SettingsField.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/projects/time_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/projects/time_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/settings/cost_rate.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/cost_rate.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -11,6 +17,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ComposerSettings">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -23,10 +30,34 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/rbdwllr/reallysimplejwt" />
+      <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/lesstif/php-jira-rest-client" />
+      <path value="$PROJECT_DIR$/vendor/netresearch/jsonmapper" />
+      <path value="$PROJECT_DIR$/vendor/vlucas/phpdotenv" />
+      <path value="$PROJECT_DIR$/vendor/yourresult/microservices" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/ruckusing/ruckusing-migrations" />
+      <path value="$PROJECT_DIR$/vendor/phpoption/phpoption" />
+    </include_path>
+  </component>
+  <component name="ProjectId" id="1vd2lmY61ELuCmkmMlFnbzhGOlC" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -37,8 +68,20 @@
       <recent name="C:\OpenServer\domains\jira-report\src" />
     </key>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="909441cd-32c2-4a88-be71-231ab6ca5166" name="Default Changelist" comment="" />
+      <created>1626877799209</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1626877799209</updated>
+      <workItem from="1626877800669" duration="5845000" />
+    </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

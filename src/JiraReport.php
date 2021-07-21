@@ -117,6 +117,19 @@ class JiraReport extends \YourResult\MicroService
                             }
                     }
                 }
+            case 'setting':
+                if (is_numeric($this->url_parts['params'][2])) {
+                    switch ($this->url_parts['params'][3]) {
+                        case 'delete':
+                            $field = SettingsField::find($this->url_parts['params'][2]);
+                            if ($field){
+                                echo json_encode($field->delete());
+                                die();
+                            }
+                            echo json_encode(false);
+                            die();
+                    }
+                }
             default:
                 return $this->set404();
         }
@@ -338,7 +351,7 @@ class JiraReport extends \YourResult\MicroService
                 $a = (array)$worklog->author;
 
                 $accountId = $worklog->author->accountId;
-                if (!$accountId){
+                if (!$accountId) {
                     $accountId = $worklog->author['accountId'];
                 }
                 if (strpos($accountId, ':') !== false) {
@@ -354,7 +367,6 @@ class JiraReport extends \YourResult\MicroService
                 ) {
                     $date_array = date_parse($worklog->started);
                     $date_string = date('Y-m-d H:i:s', mktime($date_array['hour'], $date_array['minute'], $date_array['second'], $date_array['month'], $date_array['day'], $date_array['year']));
-
 
 
                     $hours = intdiv($worklog->timeSpentSeconds, 3600);
@@ -375,7 +387,7 @@ class JiraReport extends \YourResult\MicroService
                     if ($wl_data['minutes'] > 0) {
                         $wl_data['time'] .= $wl_data['minutes'] . 'м. ';
                     }
-                  
+
                     $found_worklog = Worklog::find(['task_id' => $task->id, 'started' => $date_string]);
                     if (!$found_worklog) {
                         $found_worklog = Worklog::create($wl_data);
@@ -537,6 +549,6 @@ class JiraReport extends \YourResult\MicroService
         $data['value'] = $_REQUEST['rate'];
         $data['project_id'] = $this->curr_project->id;
         Cost::create($data);
-        header('Location: /project/'.$this->curr_project->id.'/settings');
+        header('Location: /project/' . $this->curr_project->id . '/settings');
     }
 }

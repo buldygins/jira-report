@@ -14,7 +14,20 @@ $(document).ready(function () {
 
     $(document).on('change','#entity_id',function (){
         $('#title').val($("#entity_id option:selected" ).text());
-    })
+    });
+
+    $(document).on('click','#delete_cost',function (e){
+        e.preventDefault();
+        let url = $(this).data('url');
+        let block = $(this).closest('.col');
+        postData(url,{},function (data){
+            if (data === false){
+                alert('Произошла ошибка, попробуйте перезагрузит страницу!');
+            } else {
+                $(block).remove();
+            }
+        });
+    });
 });
 
 function postData(url = '', data = {}, callback = function (data) {

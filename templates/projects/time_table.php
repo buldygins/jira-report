@@ -40,7 +40,7 @@
             </tbody>
         </table>
     <?php foreach ($costs as $cost): ?>
-        <span>Расчёт: <?= $cost['calculated'] ?> руб. Ставка <?= $cost['rate'] ?>.</span><br>
+        <span>Расчёт: <?= $cost['calculated'] ?> руб. Ставка <?= $cost['rate'] ?>. <?= $cost['additional'] ?></span><br>
     <?php endforeach; ?>
     <?php else : ?>
         <p>Задачи не найдены.</p>

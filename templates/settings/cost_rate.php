@@ -8,7 +8,7 @@
             </optgroup>
             <optgroup label="Проекты">
                 <?php foreach ($desks as $desk): ?>
-                    <option value="P_<?= $desk->jira_key ?>"><?= $desk->jira_key ?></option>
+                    <option value="P_<?= $desk->id ?>"><?= $desk->jira_key ?></option>
                 <?php endforeach; ?>
             </optgroup>
         </select>
