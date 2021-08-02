@@ -4,19 +4,13 @@
     <list default="true" id="909441cd-32c2-4a88-be71-231ab6ca5166" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JiraReport.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/JiraReport.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Cost.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Cost.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/SettingsField.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/SettingsField.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/projects/time_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/projects/time_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/settings/cost_rate.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/settings/cost_rate.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings">
+  <component name="ComposerSettings" doNotAsk="true">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
   </component>
@@ -76,7 +70,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1626877799209</updated>
-      <workItem from="1626877800669" duration="5845000" />
+      <workItem from="1626877800669" duration="5909000" />
+      <workItem from="1627284619588" duration="301000" />
+      <workItem from="1627898390191" duration="83000" />
     </task>
     <servers />
   </component>

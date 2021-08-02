@@ -231,6 +231,7 @@ class JiraReport extends \YourResult\MicroService
 
     function sync()
     {
+        ini_set('max_execution_time', 0);
         if ($this->curr_project) {
             try {
                 $project_service = new ProjectService(new ArrayConfiguration($this->configurations));
