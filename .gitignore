@@ -1,5 +1,4 @@
 /.idea/.gitignore
-/vendor
 /build
 /.env.*
 /trash.txt
