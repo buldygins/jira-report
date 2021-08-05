@@ -4,10 +4,10 @@
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <style type="text/css">
         .weekend{
-            background-color: rgb(249, 201, 255);
+            background-color: rgb(255, 198, 198);
         }
         .weekend:hover{
-            background-color: rgb(243, 173, 255);
+            background-color: rgb(253, 190, 190);
         }
         .close {
             float: none;

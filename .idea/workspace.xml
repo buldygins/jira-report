@@ -4,10 +4,8 @@
     <list default="true" id="909441cd-32c2-4a88-be71-231ab6ca5166" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JiraReport.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/JiraReport.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/migrations/20200105231148_CreateServicesTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/migrations/20200105231148_CreateServicesTable.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/JiraProject.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/JiraProject.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Model.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/projects/project_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/projects/project_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Worklog.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Worklog.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/projects/time_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/projects/time_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vendor/yourresult/microservices" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/yourresult/microservices" afterDir="false" />
     </list>
@@ -83,7 +81,10 @@
       <workItem from="1627919102198" duration="600000" />
       <workItem from="1628080705825" duration="1258000" />
       <workItem from="1628087816638" duration="9364000" />
-      <workItem from="1628157901590" duration="1664000" />
+      <workItem from="1628157901590" duration="2295000" />
+      <workItem from="1628162159070" duration="606000" />
+      <workItem from="1628170844019" duration="398000" />
+      <workItem from="1628174335355" duration="487000" />
     </task>
     <servers />
   </component>

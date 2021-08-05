@@ -42,8 +42,8 @@ class JiraReport extends \YourResult\MicroService
         if (isset($_REQUEST['isAjax']) && $_REQUEST['isAjax']) {
             return $this->ajaxRoutes();
         }
-        parent::route();
         switch ($this->url_parts['params'][1]) {
+            case '':
             case 'projects':
                 return $this->projects();
             case 'project':

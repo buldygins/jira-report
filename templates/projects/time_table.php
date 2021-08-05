@@ -38,6 +38,7 @@
                     ?>
                     <td class="<?= $class ?>"><?= $time[$i]['all'] ?? '' ?></td>
                 <?php endfor; ?>
+                <td scope="row" class="table-primary"><?= $time['all']; ?></td>
             </tr>
             </tbody>
         </table>

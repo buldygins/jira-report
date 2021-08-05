@@ -23,6 +23,7 @@ class Worklog extends Model
     public static function getWorklogsTime($worklogs)
     {
         $time = [];
+        $all_time = 0;
         foreach ($worklogs as $worklog) {
             $date = date_parse($worklog->started);
             $date_key = $date['day'];
@@ -41,21 +42,27 @@ class Worklog extends Model
             } else {
                 $time[$date_key]['all'] = $worklog->seconds_all;
             }
+            $all_time += $worklog->seconds_all;
 
         }
         foreach ($time as &$day_time) {
             foreach ($day_time as &$seconds) {
-                $hours = intdiv($seconds, 3600);
-                $minutes = ($seconds - $hours * 3600) / 60;
-                $seconds = $hours . 'ч';
-                if ($minutes != 0) {
-                    $seconds .= ' ' . $minutes . 'м';
-                }
+                $seconds = static::convertSecondsToTime($seconds);
             }
-
         }
         asort($time);
+        $time['all'] = static::convertSecondsToTime($all_time);
         return $time;
+    }
+
+    public static function convertSecondsToTime($seconds){
+        $hours = intdiv($seconds, 3600);
+        $minutes = ($seconds - $hours * 3600) / 60;
+        $seconds = $hours . 'ч';
+        if ($minutes != 0) {
+            $seconds .= ' ' . $minutes . 'м';
+        }
+        return $seconds;
     }
 
 }
