@@ -208,7 +208,11 @@ class Model
 
         $table = self::getTableName();
         $return_objects = [];
-        $found_objects = $dbpdo->query("SELECT * FROM {$table} WHERE {$where}")->fetchAll(\PDO::FETCH_NAMED);
+        $found_objects = $dbpdo->query("SELECT * FROM {$table} WHERE {$where}");
+        if (empty($found_objects)){
+            return [];
+        }
+        $found_objects = $found_objects->fetchAll(\PDO::FETCH_NAMED);
         foreach ($found_objects as $object) {
             $return_objects[] = new static($object);
         }

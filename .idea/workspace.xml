@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="909441cd-32c2-4a88-be71-231ab6ca5166" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JiraReport.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/JiraReport.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/db/migrations/20200124231148_CreateProjectsTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/migrations/20200124231148_CreateProjectsTable.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/yourresult/microservices" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/yourresult/microservices" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +77,8 @@
       <workItem from="1627284619588" duration="301000" />
       <workItem from="1627898390191" duration="525000" />
       <workItem from="1627919102198" duration="600000" />
-      <workItem from="1628080705825" duration="332000" />
+      <workItem from="1628080705825" duration="1258000" />
+      <workItem from="1628087816638" duration="5349000" />
     </task>
     <servers />
   </component>

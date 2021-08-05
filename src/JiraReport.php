@@ -39,13 +39,11 @@ class JiraReport extends \YourResult\MicroService
 
     function route()
     {
-        if ($_REQUEST['isAjax']) {
+        if (isset($_REQUEST['isAjax']) && $_REQUEST['isAjax']) {
             return $this->ajaxRoutes();
         }
         parent::route();
         switch ($this->url_parts['params'][1]) {
-            case 'addTask':
-                return $this->addTask();
             case 'projects':
                 return $this->projects();
             case 'project':
@@ -65,17 +63,11 @@ class JiraReport extends \YourResult\MicroService
                                     } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         return $this->createCostRate();
                                     }
-//                                case 'desk':
-//                                    if (isset($this->url_parts['params'][4])) {
-//                                        $this->curr_desk = JiraProject::find(['jira_key' => $this->url_parts['params'][4]]);
-//                                        return $this->makeReport();
-//                                    }
                                 case 'report':
                                     return $this->makeReport();
                                 default:
                                     return $this->set404();
                             }
-                        //return $this->getDesks();
                         return $this->set404('WE DON\'T HAVE THAT PAGE YET!');
                     } else {
                         return $this->set404('PROJECT NOT FOUND!');
@@ -117,6 +109,7 @@ class JiraReport extends \YourResult\MicroService
                             }
                     }
                 }
+                break;
             case 'setting':
                 if (is_numeric($this->url_parts['params'][2])) {
                     switch ($this->url_parts['params'][3]) {
@@ -130,6 +123,7 @@ class JiraReport extends \YourResult\MicroService
                             die();
                     }
                 }
+                break;
             default:
                 return $this->set404();
         }
@@ -150,7 +144,7 @@ class JiraReport extends \YourResult\MicroService
 
     function set404($message = 'NOT FOUND!')
     {
-        if ($_REQUEST['isAjax']) {
+        if (isset($_REQUEST['isAjax']) && $_REQUEST['isAjax']) {
             echo json_encode([
                 'success' => false,
                 'code' => 404,
@@ -162,66 +156,12 @@ class JiraReport extends \YourResult\MicroService
         return false;
     }
 
-    function addTask()
-    {
-
-        if (!isset($_REQUEST['create'])) {
-            ?>
-            <form method="post">
-                <table>
-                    <tr>
-                        <td>Тема</td>
-                        <td><input type="text" name="subject"></td>
-                    </tr>
-                    <tr>
-                        <td>Описание</td>
-                        <td><textarea rows="10" cols="40" name="text"></textarea></td>
-                    </tr>
-                </table>
-                <input type="hidden" name="project" value="<?= $_REQUEST['project']; ?>">
-                <input type="hidden" name="create" value="1">
-                <input type="submit">
-            </form>
-            <?
-        } else {
-            //print_r($_REQUEST);
-            try {
-                $issueField = new IssueField(new ArrayConfiguration($this->configurations));
-
-                $issueField->setProjectKey("BG")->setSummary($_REQUEST['subject'])->setAssigneeName("v.smorodinsky")
-                    //->setPriorityName("Critical")
-                    ->setIssueType("Задача")->setDescription($_REQUEST['text'])
-                    //->addVersion(["1.0.1", "1.0.3"])
-                    //->addComponents(['Component-1', 'Component-2'])
-                    // set issue security if you need.
-                    // ->setSecurityId(10001 /* security scheme id */)
-                    //->setDueDate('2020-01-19')
-                ;
-
-                $issueService = new IssueService(new ArrayConfiguration($this->configurations));
-
-                $ret = $issueService->create($issueField);
-
-                //If success, Returns a link to the created issue.
-                // var_dump($ret);
-                echo "<SCRIPT>document.location='/run?project={$_REQUEST['project']}';</SCRIPT>";
-            } catch (JiraException $e) {
-                print("Error Occured! " . $e->getMessage());
-            }
-        }
-    }
-
     function projects()
     {
         $output = '';
         $output .= $this->loadTemplate(realpath('templates/projects/project_table.php'), ['projects' => Project::all()]);
         return $this->render($output);
     }
-
-    function project()
-    {
-    }
-
 
     function getDesks()
     {
@@ -511,10 +451,6 @@ class JiraReport extends \YourResult\MicroService
         $daily_cost = $_REQUEST['daily_cost'] == 'false' || !isset($_REQUEST['daily_cost']);
         foreach ($projects as $project) {
             $tasks = $_REQUEST['all_tasks'] == 'true' ? $project->tasks() : $project->workedTasks($find['started >:'], $find['author_id'] ?? null);
-//            $worklogs = [];
-//            foreach ($tasks as $task){
-//                $worklogs = array_merge($worklogs, Worklog::whereGet(array_merge($find, ['task_key LIKE:' => $project->jira_key . '%'])));
-//            }
             $worklogs = Worklog::whereGet(array_merge($find, ['task_key LIKE:' => $project->jira_key . '%']));
             $time = Worklog::getWorklogsTime($worklogs);
             $costs = Cost::calculate($worklogs, $project, $user_id, $daily_cost);
