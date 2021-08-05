@@ -5,7 +5,7 @@
             <tr>
                 <td>
                     <a href='/project/<?= $project->id ?>/report'><?= $project->name ?></a>
-                    <?= $project->description ?>
+                    <?= $project->descr ?>
                 </td>
                 <td>
                     <a href="/project/<?= $project->id ?>/settings">Настройки</a>

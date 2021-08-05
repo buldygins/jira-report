@@ -44,6 +44,7 @@ class JiraProject extends Model
                                        LEFT JOIN worklogs w ON t.id = w.task_id {$where}
                                        GROUP BY t.id");
         $ids = $ids->fetchAll(\PDO::FETCH_NAMED);
+        $arr_ids = [];
         foreach ($ids as $id) {
             $arr_ids[] = $id['id'];
         }

@@ -103,7 +103,9 @@ class JiraReport extends \YourResult\MicroService
                             switch ($this->url_parts['params'][3]) {
                                 case 'report':
                                     $project = !empty($_REQUEST['project_id']) ? JiraProject::whereGet(['id' => $_REQUEST['project_id']]) : [];
-                                    $response = $this->generateReportTable($project, $_REQUEST['month'], $_REQUEST['user_id']);
+                                    $month = isset($_REQUEST['month']) ? $_REQUEST['month'] : date('Y-m');
+                                    $user_id = isset($_REQUEST['user_id']) ? $_REQUEST['user_id'] : null;
+                                    $response = $this->generateReportTable($project, $month, $user_id);
                                     echo json_encode(['view' => $response]);
                                     die();
                             }
@@ -115,7 +117,7 @@ class JiraReport extends \YourResult\MicroService
                     switch ($this->url_parts['params'][3]) {
                         case 'delete':
                             $field = SettingsField::find($this->url_parts['params'][2]);
-                            if ($field){
+                            if ($field) {
                                 echo json_encode($field->delete());
                                 die();
                             }
@@ -217,12 +219,7 @@ class JiraReport extends \YourResult\MicroService
         $search_result = $issueService->search($jql, 0, 500);
 
         foreach ($search_result->issues as $issue) {
-            if (
-                ($issue->fields->assignee->name == $_ENV['JIRA_USER']) ||
-                ($issue->fields->watches->isWatching >= 0)
-            ) {
-                $arIssues[$issue->key] = 1;
-            }
+            $arIssues[$issue->key] = 1;
         }
 
         $keys = !empty($arIssues) ? array_keys($arIssues) : [];
@@ -291,8 +288,9 @@ class JiraReport extends \YourResult\MicroService
                 $wl_key = SettingsField::find(['project_id' => $this->curr_project->id, 'name' => 'JIRA_FLD_WORKLOG_AUTHOR']);
                 $a = (array)$worklog->author;
 
-                $accountId = $worklog->author->accountId;
-                if (!$accountId) {
+                if (isset($worklog->author->accountId)) {
+                    $accountId = $worklog->author->accountId;
+                } else {
                     $accountId = $worklog->author['accountId'];
                 }
                 if (strpos($accountId, ':') !== false) {
@@ -448,9 +446,9 @@ class JiraReport extends \YourResult\MicroService
         if (empty($projects)) {
             $projects = $this->curr_project->desks();
         }
-        $daily_cost = $_REQUEST['daily_cost'] == 'false' || !isset($_REQUEST['daily_cost']);
+        $daily_cost = !isset($_REQUEST['daily_cost']) || isset($_REQUEST['daily_cost']) && $_REQUEST['daily_cost'] == 'false';
         foreach ($projects as $project) {
-            $tasks = $_REQUEST['all_tasks'] == 'true' ? $project->tasks() : $project->workedTasks($find['started >:'], $find['author_id'] ?? null);
+            $tasks = isset($_REQUEST['all_tasks']) && $_REQUEST['all_tasks'] == 'true' ? $project->tasks() : $project->workedTasks($find['started >:'], $find['author_id'] ?? null);
             $worklogs = Worklog::whereGet(array_merge($find, ['task_key LIKE:' => $project->jira_key . '%']));
             $time = Worklog::getWorklogsTime($worklogs);
             $costs = Cost::calculate($worklogs, $project, $user_id, $daily_cost);

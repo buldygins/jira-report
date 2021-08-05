@@ -12,6 +12,7 @@
             </thead>
             <tbody>
             <?php foreach ($tasks as $task):
+                $all_time = isset($time[$task->project_key]['all']) ? $time[$task->project_key]['all'] : 0;
                 ?>
                 <tr>
                     <td scope="row" class="table-warning"><?= $task->project_key ?> <?= $task->summary ?></td>
@@ -19,10 +20,11 @@
                         $is_weekend = (date('N', strtotime($date . $i)) >= 6);
                         $class = isset($time[$task->project_key][$i]) ? 'table-success' : 'table-secondary';
                         $class = $is_weekend ? 'weekend' : $class;
+                        $display_time = isset($time[$task->project_key][$i]) ? $time[$task->project_key][$i] : '';
                             ?>
-                            <td class="<?= $class ?>"><?= $time[$task->project_key][$i] ?></td>
+                            <td class="<?= $class ?>"><?= $display_time ?></td>
                         <?php endfor; ?>
-                    <td class="table-<?= $time[$task->project_key]['all'] > 0 ? 'success' : 'secondary' ?>"><?= $time[$task->project_key]['all'] ?></td>
+                    <td class="table-<?= $all_time > 0 ? 'success' : 'secondary' ?>"><?php  if ($all_time) echo $all_time; ?></td>
                 </tr>
             <?php
             endforeach;

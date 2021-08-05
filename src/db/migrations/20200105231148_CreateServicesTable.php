@@ -13,8 +13,6 @@ class CreateServicesTable extends Ruckusing_Migration_Base
 
         $this->add_index('services', 'nam', ['unique'=>true]);
 
-        $this->execute("INSERT INTO `services` (`nam`, `url`, `descr`, `created_at`) ".
-            "VALUES ('main', '{$_ENV['MAIN_URL']}', 'Ядро микросервисов', NOW());");
 
 //        $this->execute("INSERT INTO `services` (`nam`, `url`, `descr`, `created_at`) ".
 //            "VALUES ('{$_ENV['SERVICE_NAM']}', '{$_ENV['SERVICE_URL']}', '', NOW());");

@@ -34,7 +34,7 @@ class Model
     static function getTableName()
     {
         if (get_parent_class(static::class) == self::class) {
-            return Inflect::pluralize(strtolower(preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', basename(static::class))));
+            return Inflect::pluralize(strtolower(preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', (new \ReflectionClass(static::class))->getShortName())));
         }
         return get_parent_class(static::class)::getTableName();
     }
@@ -97,7 +97,6 @@ class Model
 
         $pre_query->execute($arr_values);
 
-        $dbpdo->query("INSERT INTO {$table} ({$keys}) VALUES ({$values})");
         $id = $dbpdo->query("SELECT LAST_INSERT_ID() as id")->fetchAll();
         if ($id[0]['id']) {
             $model = new static(array_merge(['id' => $id[0]['id']], $data));
@@ -165,7 +164,11 @@ class Model
         $table = self::getTableName();
 
         $return_objects = [];
-        $data = $dbpdo->query("SELECT * FROM {$table}")->fetchAll(\PDO::FETCH_NAMED);
+        $data = $dbpdo->query("SELECT * FROM {$table}");
+        if (empty($data)){
+            return [];
+        }
+        $data = $data->fetchAll(\PDO::FETCH_NAMED);
         foreach ($data as $object) {
             $return_objects[] = new static($object);
         }
@@ -179,6 +182,7 @@ class Model
         $where = [];
         $or_where = [];
         foreach ($data as $field_key => $value) {
+            if (empty($value)) continue;
             if (is_array($value) && count($value) >= 1) {
                 foreach ($value as $or_value) {
                     if (strpos($field_key, ':') !== false) {
@@ -203,7 +207,7 @@ class Model
         }
         $where = implode(' AND ', $where);
         if (empty($where)) {
-            return false;
+            return [];
         }
 
         $table = self::getTableName();
