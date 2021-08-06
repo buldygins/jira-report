@@ -7,3 +7,4 @@ include "config.php";
 
 header('Content-Type: text/html; charset=utf-8');
 $my = new \YourResult\JiraReport($db);
+$my->route();

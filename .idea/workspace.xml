@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="909441cd-32c2-4a88-be71-231ab6ca5166" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/JiraReport.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/JiraReport.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Worklog.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Worklog.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/projects/time_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/projects/time_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vendor/yourresult/microservices" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/yourresult/microservices" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,7 +81,8 @@
       <workItem from="1628157901590" duration="2295000" />
       <workItem from="1628162159070" duration="606000" />
       <workItem from="1628170844019" duration="398000" />
-      <workItem from="1628174335355" duration="487000" />
+      <workItem from="1628174335355" duration="1091000" />
+      <workItem from="1628259946854" duration="2311000" />
     </task>
     <servers />
   </component>
