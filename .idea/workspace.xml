@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="909441cd-32c2-4a88-be71-231ab6ca5166" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/log.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/log.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JiraReport.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/JiraReport.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/projects/time_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/projects/time_table.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +82,7 @@
       <workItem from="1628170844019" duration="398000" />
       <workItem from="1628174335355" duration="1091000" />
       <workItem from="1628259946854" duration="3481000" />
-      <workItem from="1628523775056" duration="345000" />
+      <workItem from="1628523775056" duration="504000" />
     </task>
     <servers />
   </component>

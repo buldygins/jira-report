@@ -180,9 +180,6 @@ class JiraReport extends \YourResult\MicroService
                 $jira_projects = $project_service->getAllProjects();
                 //fetch users
                 foreach ($jira_projects as $jira_project) {
-                    if ($jira_project->key != 'WEB'){
-                        continue;
-                    }
                     try {
                         JiraProject::firstOrCreate([
                             'jira_key' => $jira_project->key,
