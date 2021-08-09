@@ -15,7 +15,7 @@
                 $all_time = isset($time[$task->project_key]['all']) ? $time[$task->project_key]['all'] : 0;
                 ?>
                 <tr>
-                    <td scope="row" class="table-warning"><?= $task->project_key ?> <?= $task->summary ?></td>
+                    <td scope="row" class="table-warning"><a href="<?= $host ?>/browse/<?= $task->project_key ?>"><?= $task->project_key ?> <?= $task->summary ?></a></td>
                     <?php for ($i = 1; $i < $days; $i++):
                         $is_weekend = (date('N', strtotime($date . $i)) >= 6);
                         $class = isset($time[$task->project_key][$i]) ? 'table-success' : 'table-secondary';

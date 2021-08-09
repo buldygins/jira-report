@@ -452,6 +452,7 @@ class JiraReport extends \YourResult\MicroService
             $worklogs = Worklog::whereGet(array_merge($find, ['task_key LIKE:' => $project->jira_key . '%']));
             $time = Worklog::getWorklogsTime($worklogs);
             $costs = Cost::calculate($worklogs, $project, $user_id, $daily_cost);
+            $host = SettingsField::whereGet(['project_id' => $this->curr_project->id, 'name' => 'JIRA_HOST'])[0]->value;
             $output .= $this->loadTemplate(realpath('templates/projects/time_table.php'),
                 [
                     'project_name' => $project->jira_key,
@@ -460,6 +461,7 @@ class JiraReport extends \YourResult\MicroService
                     'days' => cal_days_in_month(CAL_GREGORIAN, $month, $year),
                     'date' => sprintf('%d-%s-', $year, $month),
                     'costs' => $costs,
+                    'host' => $host,
                 ]);
         }
         $output .= '</div>';
