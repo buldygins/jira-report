@@ -180,21 +180,28 @@ class JiraReport extends \YourResult\MicroService
                 $jira_projects = $project_service->getAllProjects();
                 //fetch users
                 foreach ($jira_projects as $jira_project) {
-                    JiraProject::firstOrCreate([
-                        'jira_key' => $jira_project->key,
-                        'project_id' => $this->curr_project->id,
-                    ]);
-                    $assignees = $project_service->getAssignable($jira_project->id);
-                    foreach ($assignees as $assignee) {
-                        JiraUser::firstOrCreate([
-                            'displayName' => $assignee->displayName,
-                            'accountId' => $assignee->accountId,
+                    if ($jira_project->key != 'WEB'){
+                        continue;
+                    }
+                    try {
+                        JiraProject::firstOrCreate([
+                            'jira_key' => $jira_project->key,
+                            'project_id' => $this->curr_project->id,
                         ]);
+                        $assignees = $project_service->getAssignable($jira_project->key);
+                        foreach ($assignees as $assignee) {
+                            JiraUser::firstOrCreate([
+                                'displayName' => $assignee->displayName,
+                                'accountId' => $assignee->accountId ?? $assignee->key,
+                            ]);
+                        }
+                    } catch (\Exception $e) {
+                        continue;
                     }
                     $this->syncJiraTasks($jira_project->key);
                 }
             } catch (JiraRestApi\JiraException $e) {
-                print("Error Occured! " . $e->getMessage());
+                //print("Error Occured! " . $e->getMessage());
             }
             header('Location: /project/' . $this->curr_project->id . '/report');
             return;
@@ -214,6 +221,7 @@ class JiraReport extends \YourResult\MicroService
                 $jql .= ' AND ' . $filter->value;
             }
         }
+
         $issueService = new IssueService(new ArrayConfiguration($this->configurations));
 
         $search_result = $issueService->search($jql, 0, 500);
@@ -290,8 +298,12 @@ class JiraReport extends \YourResult\MicroService
 
                 if (isset($worklog->author->accountId)) {
                     $accountId = $worklog->author->accountId;
-                } else {
+                } elseif (isset($worklog->author->key)) {
+                    $accountId = $worklog->author->key;
+                } elseif (is_array($worklog->author) && isset($worklog->author['accountId'])) {
                     $accountId = $worklog->author['accountId'];
+                } elseif (is_array($worklog->author) && isset($worklog->author['key'])){
+                    $accountId = $worklog->author['key'];
                 }
                 if (strpos($accountId, ':') !== false) {
                     $jira_user1 = JiraUser::find(['accountId' => $accountId]);
@@ -316,7 +328,7 @@ class JiraReport extends \YourResult\MicroService
                         'seconds_all' => $worklog->timeSpentSeconds,
                         'hours' => $hours,
                         'minutes' => (int)($worklog->timeSpentSeconds - $hours * 3600) / 60,
-                        'author_id' => $worker->id,
+                        'author_id' => $worker->id ?? null,
                     ];
 
                     $wl_data['time'] = '';
