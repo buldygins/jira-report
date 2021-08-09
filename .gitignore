@@ -2,3 +2,4 @@
 /build
 /.env.*
 /trash.txt
+/logs/log.log
