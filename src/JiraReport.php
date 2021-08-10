@@ -208,7 +208,7 @@ class JiraReport extends \YourResult\MicroService
 
     function syncJiraTasks($project_key)
     {
-        $jql = "project = {$project_key}";
+        $jql = "project = \"{$project_key}\"";
 
         $filter = SettingsField::find(['name' => $project_key . '_FILTER', 'project_id' => $this->curr_project->id]);
         if (!$filter) {
@@ -221,6 +221,7 @@ class JiraReport extends \YourResult\MicroService
 
         $issueService = new IssueService(new ArrayConfiguration($this->configurations));
 
+        echo $jql."<br>\r\n";
         $search_result = $issueService->search($jql, 0, 500);
 
         foreach ($search_result->issues as $issue) {

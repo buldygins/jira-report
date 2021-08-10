@@ -3,7 +3,8 @@
     <?php if (count($tasks)): ?>
         <table class="table table-bordered table-striped  table-hover table-sm">
             <thead>
-            <th class="table-secondary" scope="col"></th>
+            <th class="table-secondary" scope="col" colspan="2"></th>
+            <th class="table-secondary" scope="col" colspan="1">Статус</th>
             <?php
             for ($i = 1; $i < $days; $i++):?>
                 <th scope="col" class="table-secondary"><?= $i ?></th>
@@ -11,39 +12,62 @@
             <th scope="col" class="table-secondary">Всего</th>
             </thead>
             <tbody>
-            <?php foreach ($tasks as $task):
+            <?php foreach ($tasks as $task)
+            {
                 $all_time = isset($time[$task->project_key]['all']) ? $time[$task->project_key]['all'] : 0;
                 ?>
                 <tr>
-                    <td scope="row" class="table-warning"><a href="<?= $host ?>/browse/<?= $task->project_key ?>" target="_blank"><?= $task->project_key ?> <?= $task->summary ?></a></td>
-                    <?php for ($i = 1; $i < $days; $i++):
+                    <td scope="row" class="table-warning">
+                        <a href="<?= $host ?>/browse/<?= $task->project_key ?>" target="_blank"><nobr><?= $task->project_key ?></nobr></a>
+                    </td>
+                    <td scope="row" class="table-warning">
+                        <nobr><?= $task->summary ?></nobr>
+                    </td>
+                    <td scope="row" class="table-warning">
+                        <center>
+                            <span style="padding: 4px;">
+                                <nobr><?= $task->status ?></nobr>
+                            </span>
+                        </center>
+                    </td>
+                    <?php
+                    for ($i = 1; $i < $days; $i++)
+                    {
                         $is_weekend = (date('N', strtotime($date . $i)) >= 6);
                         $class = isset($time[$task->project_key][$i]) ? 'table-success' : 'table-secondary';
                         $class = $is_weekend ? 'weekend' : $class;
                         $display_time = isset($time[$task->project_key][$i]) ? $time[$task->project_key][$i] : '';
                             ?>
-                            <td class="<?= $class ?>"><?= $display_time ?></td>
-                        <?php endfor; ?>
-                    <td class="table-<?= $all_time > 0 ? 'success' : 'secondary' ?>"><?php  if ($all_time) echo $all_time; ?></td>
+                        <td class="<?= $class ?>"><nobr><?= $display_time ?></nobr></td>
+
+                    <?
+                    }
+                    ?>
+                    <td class="table-<?= $all_time > 0 ? 'success' : 'secondary' ?>">
+                        <?php  if ($all_time) echo '<nobr>'.$all_time.'</nobr>'; ?>
+                    </td>
                 </tr>
             <?php
-            endforeach;
+            }
             ?>
             <tr>
-                <td scope="row" class="table-secondary">Всего за день</td>
-                <?php for ($i = 1; $i < $days; $i++):
+                <td scope="row" class="table-secondary" colspan="3">Всего за день</td>
+                <?php for ($i = 1; $i < $days; $i++)
+                {
                     $is_weekend = (date('N', strtotime($date . $i)) >= 6);
                     $class = isset($time[$i]['all']) ? 'table-success' : 'table-secondary';
                     $class = $is_weekend ? 'weekend' : $class;
                     ?>
-                    <td class="<?= $class ?>"><?= $time[$i]['all'] ?? '' ?></td>
-                <?php endfor; ?>
-                <td scope="row" class="table-primary"><?= $time['all']; ?></td>
+                    <td class="<?= $class ?>"><nobr><?= $time[$i]['all'] ?? '' ?></nobr></td>
+                <?php
+                }
+                ?>
+                <td scope="row" class="table-primary"><nobr><?= $time['all']; ?></nobr></td>
             </tr>
             </tbody>
         </table>
     <?php foreach ($costs as $cost): ?>
-        <span>Расчёт: <?= $cost['calculated'] ?> руб. Ставка <?= $cost['rate'] ?>. <?= $cost['additional'] ?></span><br>
+        <!--span>Расчёт: <?= $cost['calculated'] ?> руб. Ставка <?= $cost['rate'] ?>. <?= $cost['additional'] ?></span --><br>
     <?php endforeach; ?>
     <?php else : ?>
         <p>Задачи не найдены.</p>

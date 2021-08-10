@@ -12,6 +12,8 @@
         .close {
             float: none;
         }
+        .table-secondary {
+        }
     </style>
 </head>
 <body>
