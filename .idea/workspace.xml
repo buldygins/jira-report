@@ -2,10 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="909441cd-32c2-4a88-be71-231ab6ca5166" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JiraReport.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/JiraReport.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/db/logs/development.log" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/logs/development.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/JiraTask.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/JiraTask.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/projects/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/projects/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/projects/project_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/projects/project_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/projects/report_filters.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/projects/report_filters.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/projects/time_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/projects/time_table.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +70,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../mytalking" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -79,7 +84,10 @@
       <recent name="C:\OpenServer\domains\jira-report\src" />
     </key>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="909441cd-32c2-4a88-be71-231ab6ca5166" name="Default Changelist" comment="" />
@@ -99,11 +107,18 @@
       <workItem from="1628174335355" duration="1091000" />
       <workItem from="1628259946854" duration="3481000" />
       <workItem from="1628524536004" duration="3853000" />
+      <workItem from="1628770517584" duration="575000" />
+      <workItem from="1628772419511" duration="3470000" />
+      <workItem from="1629191920123" duration="1448000" />
+      <workItem from="1629206146346" duration="636000" />
+      <workItem from="1629290509618" duration="1579000" />
+      <workItem from="1629467020201" duration="1269000" />
+      <workItem from="1629713576557" duration="1253000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

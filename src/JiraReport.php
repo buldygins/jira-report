@@ -221,7 +221,6 @@ class JiraReport extends \YourResult\MicroService
 
         $issueService = new IssueService(new ArrayConfiguration($this->configurations));
 
-        echo $jql."<br>\r\n";
         $search_result = $issueService->search($jql, 0, 500);
 
         foreach ($search_result->issues as $issue) {
@@ -300,7 +299,7 @@ class JiraReport extends \YourResult\MicroService
                     $accountId = $worklog->author->key;
                 } elseif (is_array($worklog->author) && isset($worklog->author['accountId'])) {
                     $accountId = $worklog->author['accountId'];
-                } elseif (is_array($worklog->author) && isset($worklog->author['key'])){
+                } elseif (is_array($worklog->author) && isset($worklog->author['key'])) {
                     $accountId = $worklog->author['key'];
                 }
                 if (strpos($accountId, ':') !== false) {
@@ -311,39 +310,35 @@ class JiraReport extends \YourResult\MicroService
                 } else {
                     $worker = JiraUser::find(['accountId' => $accountId]);
                 }
-                if ((($_ENV['JIRA_FLD_WORKLOG_ANY_AUTHOR'] == 0) && ($a[$wl_key] == $_ENV['JIRA_USER']))
-                    || ($_ENV['JIRA_FLD_WORKLOG_ANY_AUTHOR'] == 1)
-                ) {
-                    $date_array = date_parse($worklog->started);
-                    $date_string = date('Y-m-d H:i:s', mktime($date_array['hour'], $date_array['minute'], $date_array['second'], $date_array['month'], $date_array['day'], $date_array['year']));
+                $date_array = date_parse($worklog->started);
+                $date_string = date('Y-m-d H:i:s', mktime($date_array['hour'], $date_array['minute'], $date_array['second'], $date_array['month'], $date_array['day'], $date_array['year']));
 
 
-                    $hours = intdiv($worklog->timeSpentSeconds, 3600);
-                    $wl_data = [
-                        'task_id' => $task->id,
-                        'task_key' => $task->project_key,
-                        'started' => $date_string,
-                        'seconds_all' => $worklog->timeSpentSeconds,
-                        'hours' => $hours,
-                        'minutes' => (int)($worklog->timeSpentSeconds - $hours * 3600) / 60,
-                        'author_id' => $worker->id ?? null,
-                    ];
+                $hours = intdiv($worklog->timeSpentSeconds, 3600);
+                $wl_data = [
+                    'task_id' => $task->id,
+                    'task_key' => $task->project_key,
+                    'started' => $date_string,
+                    'seconds_all' => $worklog->timeSpentSeconds,
+                    'hours' => $hours,
+                    'minutes' => (int)($worklog->timeSpentSeconds - $hours * 3600) / 60,
+                    'author_id' => $worker->id ?? null,
+                ];
 
-                    $wl_data['time'] = '';
-                    if ($wl_data['hours'] > 0) {
-                        $wl_data['time'] .= $wl_data['hours'] . 'ч ';
-                    }
-                    if ($wl_data['minutes'] > 0) {
-                        $wl_data['time'] .= $wl_data['minutes'] . 'м. ';
-                    }
+                $wl_data['time'] = '';
+                if ($wl_data['hours'] > 0) {
+                    $wl_data['time'] .= $wl_data['hours'] . 'ч ';
+                }
+                if ($wl_data['minutes'] > 0) {
+                    $wl_data['time'] .= $wl_data['minutes'] . 'м. ';
+                }
 
-                    $found_worklog = Worklog::find(['task_id' => $task->id, 'started' => $date_string]);
-                    if (!$found_worklog) {
-                        $found_worklog = Worklog::create($wl_data);
-                    } else {
-                        $found_worklog = Worklog::update($found_worklog->id, $wl_data);
-                        // TODO: log если другое время
-                    }
+                $found_worklog = Worklog::find(['task_id' => $task->id, 'started' => $date_string]);
+                if (!$found_worklog) {
+                    $found_worklog = Worklog::create($wl_data);
+                } else {
+                    $found_worklog = Worklog::update($found_worklog->id, $wl_data);
+                    // TODO: log если другое время
                 }
             }
         }

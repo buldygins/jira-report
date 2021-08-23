@@ -12,4 +12,12 @@ class JiraTask extends Model
     public $priority;
     public $description;
 
+    public function getShortName()
+    {
+        if (strlen($this->summary) > 20){
+            return substr($this->summary, 0, strpos($this->summary, ' ',20)) . '...';
+        }
+        return $this->summary;
+    }
+
 }

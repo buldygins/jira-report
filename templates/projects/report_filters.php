@@ -1,6 +1,6 @@
 <div id="filters" class="container">
     <div class="row">
-        <div class="col-9">
+        <div class="container">
             <div class="form-group">
                 <label class="form-check-label" for="user_filter">Сотрудник</label>
                 <select class="form-control" id="user_filter">
@@ -31,8 +31,6 @@
                 <label for="month">Месяц: </label>
                 <input class="form-control" type="month" id="month" value="<?= date('Y-m') ?>"/>
             </div>
-        </div>
-        <div class="col-3">
             <button id="makeReport" class="btn btn-secondary">Показать по фильтрам</button>
         </div>
     </div>
